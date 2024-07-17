@@ -8,11 +8,15 @@
             table="order_status"
             repository-class="App\Infrastructure\Repository\DoctrineOrderStatusRepository"
     >
+        <indexes>
+            <index name="status_order_type_idx" columns="status_id,is_delivery,is_express"/>
+        </indexes>
+
         <id name="id" type="integer" length="11">
             <generator strategy="AUTO" />
         </id>
 
-        <field name="statusId" type="int" length="11" />
+        <field name="statusId" column="status_id" type="integer" length="11" />
         <embedded name="orderType" use-column-prefix="false" class="App\Domain\ValueObject\OrderType" />
         <embedded name="code" use-column-prefix="false" class="App\Domain\ValueObject\StatusCode" />
         <embedded name="content" use-column-prefix="false" class="App\Domain\ValueObject\StatusContent" />
