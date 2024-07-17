@@ -10,12 +10,19 @@ use App\Domain\ValueObject\StatusContent;
 
 class OrderStatus
 {
+    private int $id;
+
     public function __construct(
         private int    $statusId,
         private OrderType $orderType,
         private StatusCode $code,
         private StatusContent $content,
     ) {
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getStatusId(): int

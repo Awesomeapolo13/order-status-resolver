@@ -3,8 +3,10 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
-    <embeddable name="App\Domain\ValueObject\OrderType">
-        <field name="isDelivery" column="is_delivery" type="boolean" />
-        <field name="isExpress" column="is_express" type="boolean" />
+    <embeddable name="App\Domain\ValueObject\StatusContent">
+        <field name="title" column="title" type="string" length="60" />
+        <field name="subTitle" column="sub_title" type="array" />
+        <field name="description" column="description" type="array" />
+        <field name="icoType" column="ico_type" type="array" />
     </embeddable>
 </doctrine-mapping>
