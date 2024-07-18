@@ -51,8 +51,12 @@ test:
 	${DOCKER_EXEC_PHP} php bin/phpunit
 cache:
 	${DOCKER_EXEC_PHP} php bin/console cache:clear
+m_create:
+	${DOCKER_EXEC_PHP} php bin/console doctrine:migration:diff
 m_run:
 	${DOCKER_EXEC_PHP} php bin/console doctrine:migration:migrate
+m_rollback:
+	${DOCKER_EXEC_PHP} php bin/console doctrine:migration:rollback
 fx_load:
 	${DOCKER_EXEC_PHP} php bin/console doctrine:fixtures:load
 init:
