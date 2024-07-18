@@ -8,6 +8,7 @@ use App\Application\Request\GetActiveStatusRequest;
 use App\Application\UseCase\GetActiveStatusUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -20,7 +21,7 @@ class GetActiveStatusController extends AbstractController
     }
 
     public function __invoke(
-        #[MapQueryString] GetActiveStatusRequest $request
+        #[MapQueryString(validationFailedStatusCode: Response::HTTP_BAD_REQUEST)] GetActiveStatusRequest $request
     ): JsonResponse {
         ($this->activeStatusUseCase)($request);
 

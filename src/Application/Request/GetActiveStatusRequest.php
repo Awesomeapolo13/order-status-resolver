@@ -15,7 +15,6 @@ readonly class GetActiveStatusRequest
         public bool $isPreparingOnProduction,
         public bool $isAvailableInOffice,
         public bool $isFullyConfirmed,
-        public bool $isForceMajor,
         public bool $hasPaid,
         public bool $canRateOrder,
         public bool $isRated,
