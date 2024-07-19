@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Request;
 
-use DateTime;
-
 readonly class GetActiveStatusRequest
 {
     public function __construct(
@@ -18,16 +16,16 @@ readonly class GetActiveStatusRequest
         public bool $hasPaid,
         public bool $canRateOrder,
         public bool $isRated,
-        public DateTime $orderDate,
-        public DateTime $statusCheckedOutAt,
+        public string $orderDate,
+        public string $statusCheckedOutAt,
         public string $ttCloseTime,
         public ?int $nearestSlotNum = null,
         public ?int $currentSlotNum = null,
-        public ?DateTime $currentSlotBegin = null,
-        public ?DateTime $currentSlotLength = null,
-        public ?DateTime $deliveryDate = null,
-        public ?DateTime $paidAt = null,
-        public ?DateTime $lastPayTime = null,
+        public ?string $currentSlotBegin = null,
+        public ?string $currentSlotLength = null,
+        public ?string $deliveryDate = null,
+        public ?string $paidAt = null,
+        public ?string $lastPayTime = null,
         public ?string $courierSearchingTime = null,
     ) {
     }
