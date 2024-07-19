@@ -1,15 +1,15 @@
 version: "3.8"
 
 networks:
-  example-net:
-    name: example-net
+  status-resolver-net:
+    name: status-resolver-net
     driver: bridge
 
 services:
   php-fpm:
     container_name: php-fpm
     networks:
-      - example-net
+      - status-resolver-net
     build:
       context: ../../
       dockerfile: ./.deployment/docker/php-fpm/Dockerfile
@@ -21,12 +21,12 @@ services:
       PUID: ${PUID}
       PGID: ${PGID}
     volumes:
-      - ./../../:/var/www/homework
+      - ./../../:/var/www/status-resolver
 
   nginx:
     container_name: nginx
     networks:
-      - example-net
+      - status-resolver-net
     build:
       context: ./nginx
       dockerfile: ./Dockerfile
@@ -39,14 +39,14 @@ services:
     ports:
       - ${NGINX_HOST_HTTP_PORT}:80
     volumes:
-      - ./../../:/var/www/homework:rw
+      - ./../../:/var/www/status-resolver:rw
     depends_on:
       - php-fpm
 
   postgres:
     container_name: postgres
     networks:
-      - example-net
+      - status-resolver-net
     build:
       context: ./postgres
       dockerfile: ./Dockerfile
@@ -58,6 +58,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - db_example_data:/var/lib/postgresql/data:rw
+      - db_status_resolver_data:/var/lib/postgresql/data:rw
 volumes:
-  db_example_data:
+  db_status_resolver_data:
