@@ -19,18 +19,17 @@ class DoctrineOrderStatusRepository extends ServiceEntityRepository implements O
     }
 
     /**
-     * todo Пересоздать таблицу, т.к. statusId в составе индекса не нужен
+     * Получение списка статусов по типу заказа.
      */
     public function findStatusesByType(GetStatusesByTypeQuery $query): array
     {
-        $result = $this
+        return $this
             ->createQueryBuilder('os')
-            ->where('os.orderType = :orderType')
-            ->setParameter('orderType', new OrderType($query->isDelivery, $query->isExpress))
+            ->where('os.orderType.isDelivery = :isDelivery')
+            ->setParameter('isDelivery', $query->isDelivery)
+            ->andWhere('os.orderType.isExpress = :isExpress')
+            ->setParameter('isExpress', $query->isExpress)
             ->getQuery()
-            ->getResult()
-        ;
-
-        return [];
+            ->getResult();
     }
 }
