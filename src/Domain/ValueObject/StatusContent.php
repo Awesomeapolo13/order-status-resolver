@@ -8,6 +8,7 @@ use InvalidArgumentException;
 
 readonly class StatusContent
 {
+    public const DEFAULT_CONTENT_KEY = 'default';
     private string $title;
     private array $subTitle;
     private array $description;
@@ -16,13 +17,13 @@ readonly class StatusContent
     public function __construct(
         string $title,
         array $subTitle = [
-            'default' => null,
+            self::DEFAULT_CONTENT_KEY => null,
         ],
         array $description = [
-            'default' => null,
+            self::DEFAULT_CONTENT_KEY => null,
         ],
         array $icoType = [
-            'default' => null,
+            self::DEFAULT_CONTENT_KEY => null,
         ],
     ) {
         $this->assertTitle($title);
@@ -47,7 +48,7 @@ readonly class StatusContent
 
     public function getDefaultSubTitle(): ?string
     {
-        return $this->subTitle['default'];
+        return $this->subTitle[self::DEFAULT_CONTENT_KEY];
     }
 
     public function getDescription(): array
@@ -57,7 +58,7 @@ readonly class StatusContent
 
     public function getDefaultDescription(): ?string
     {
-        return $this->description['default'];
+        return $this->description[self::DEFAULT_CONTENT_KEY];
     }
 
     public function getIcoType(): array
@@ -67,7 +68,7 @@ readonly class StatusContent
 
     public function getDefaultIcoType(): ?string
     {
-        return $this->description['default'];
+        return $this->description[self::DEFAULT_CONTENT_KEY];
     }
 
     private function assertTitle(string $title): void

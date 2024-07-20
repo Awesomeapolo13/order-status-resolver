@@ -18,10 +18,18 @@ class OrderStatusModelFactory
             $orderStatus->getStatusId(),
             $orderStatus->getCode()->getCode(),
             $content->getTitle(),
+            $orderStatusDto->orderType,
+            $orderStatusDto->orderState,
+            $orderStatusDto->orderDate,
+            $orderStatusDto->statusCheckedOutAt,
+            $orderStatusDto->workingTime,
+            $orderStatusDto->statuses,
             $content->getDefaultSubTitle(),
             $content->getDefaultDescription(),
             $content->getDefaultIcoType(),
             $orderStatusDto->statusId === $orderStatus->getStatusId(),
+            $orderStatusDto->delivery,
+            $orderStatusDto->currentDateTime,
         );
     }
 }
