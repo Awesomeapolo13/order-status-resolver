@@ -28,7 +28,7 @@ class OrderStatusModel
         public DateTime         $orderDate,
         public DateTime         $statusCheckedOutAt,
         public StoreWorkingTime $workingTime,
-        public array            $statuses, private readonly StoreWorkingTime $storeWorkingTime,
+        public array            $statuses,
         private ?string         $subTitle = null,
         private string          $description = '',
         private ?int            $iconType = null,
@@ -164,7 +164,7 @@ class OrderStatusModel
      */
     public function isNeedToHurryUp(): bool
     {
-        $closeTime = $this->storeWorkingTime->getTtCloseTime();
+        $closeTime = $this->workingTime->getTtCloseTime();
 
         return (new DateTime($closeTime))->modify('-2 hours') < $this->currentDateTime;
     }
@@ -238,7 +238,7 @@ class OrderStatusModel
 
     public function isTtClosed(): bool
     {
-        $ttWorkingTime = $this->storeWorkingTime;
+        $ttWorkingTime = $this->workingTime;
 
         return (new DateTime())
                 ->setTime(
