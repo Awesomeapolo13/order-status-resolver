@@ -44,7 +44,7 @@ class OrderStatusDtoFactory implements OrderStatusDtoFactoryInterface
                     $request->nearestSlotNum,
                     $request->currentSlotNum,
                     new DateTime($request->currentSlotBegin),
-                    new DateTime($request->currentSlotLength),
+                    $request->currentSlotLength,
                 ),
                 new PaymentDateTime(
                     new DateTime($request->paidAt),

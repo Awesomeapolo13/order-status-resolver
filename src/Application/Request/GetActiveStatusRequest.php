@@ -22,7 +22,7 @@ readonly class GetActiveStatusRequest
         public ?int $nearestSlotNum = null,
         public ?int $currentSlotNum = null,
         public ?string $currentSlotBegin = null,
-        public ?string $currentSlotLength = null,
+        public ?int $currentSlotLength = null,
         public ?string $deliveryDate = null,
         public ?string $paidAt = null,
         public ?string $lastPayTime = null,

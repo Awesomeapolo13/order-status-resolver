@@ -12,7 +12,7 @@ readonly class DeliverySlot
         private int $nearestSlotNum,
         private int $currentSlotNum,
         private DateTime $currentSlotBegin,
-        private DateTime $currentSlotLength,
+        private int $currentSlotLength,
     ) {
     }
 
@@ -31,7 +31,7 @@ readonly class DeliverySlot
         return $this->currentSlotBegin;
     }
 
-    public function getCurrentSlotLength(): DateTime
+    public function getCurrentSlotLength(): int
     {
         return $this->currentSlotLength;
     }
