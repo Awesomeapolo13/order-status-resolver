@@ -20,7 +20,7 @@ class OrderStatusDtoFactory implements OrderStatusDtoFactoryInterface
     /**
      * @throws Exception
      */
-    public function createFromRequest(GetActiveStatusRequest $request): OrderStatusDto
+    public function createFromRequest(GetActiveStatusRequest $request, array $statuses): OrderStatusDto
     {
         return new OrderStatusDto(
             $request->statusId,
@@ -36,6 +36,7 @@ class OrderStatusDtoFactory implements OrderStatusDtoFactoryInterface
             new DateTime($request->orderDate),
             new DateTime($request->statusCheckedOutAt),
             new StoreWorkingTime($request->ttCloseTime),
+            $statuses,
             $request->isDelivery
                 ? new Delivery(
                 new DateTime($request->deliveryDate),

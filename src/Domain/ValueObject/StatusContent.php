@@ -45,14 +45,29 @@ readonly class StatusContent
         return $this->subTitle;
     }
 
+    public function getDefaultSubTitle(): ?string
+    {
+        return $this->subTitle['default'];
+    }
+
     public function getDescription(): array
     {
         return $this->description;
     }
 
+    public function getDefaultDescription(): ?string
+    {
+        return $this->description['default'];
+    }
+
     public function getIcoType(): array
     {
         return $this->icoType;
+    }
+
+    public function getDefaultIcoType(): ?string
+    {
+        return $this->description['default'];
     }
 
     private function assertTitle(string $title): void

@@ -7,6 +7,7 @@ namespace App\Application\UseCase;
 use App\Application\Request\GetActiveStatusRequest;
 use App\Application\Response\GetActiveStatusResponse;
 use App\Application\Service\StatusResolver\Factory\OrderStatusDtoFactoryInterface;
+use App\Application\Service\StatusResolver\OrderStatusResolverInterface;
 use App\Domain\Repository\OrderStatusRepositoryInterface;
 use App\Domain\Repository\Query\GetStatusesByTypeQuery;
 
@@ -15,6 +16,7 @@ class GetActiveStatusUseCase
     public function __construct(
         private readonly OrderStatusRepositoryInterface $orderStatusRepository,
         private readonly OrderStatusDtoFactoryInterface $orderStatusDtoFactory,
+        private readonly OrderStatusResolverInterface $orderStatusResolver,
     ) {
     }
 
@@ -23,8 +25,14 @@ class GetActiveStatusUseCase
         $statuses = $this->orderStatusRepository->findStatusesByType(
             new GetStatusesByTypeQuery($request->isDelivery, $request->isExpress)
         );
-        $orderStatusDto = $this->orderStatusDtoFactory->createFromRequest($request);
+        $orderStatusDto = $this->orderStatusDtoFactory->createFromRequest($request, $statuses);
+        $statusModel = $this->orderStatusResolver->resolveStatus($orderStatusDto);
 
-        return new GetActiveStatusResponse('Mock');
+        return new GetActiveStatusResponse(
+            $statusModel->getTitle(),
+            $statusModel->getSubTitle(),
+            $statusModel->getDescription(),
+            $statusModel->getIconType(),
+        );
     }
 }
