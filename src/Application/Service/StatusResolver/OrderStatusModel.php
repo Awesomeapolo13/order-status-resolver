@@ -114,6 +114,11 @@ class OrderStatusModel
         return $this->orderState->isHasPaid();
     }
 
+    public function getOrderType(): OrderType
+    {
+        return $this->orderType;
+    }
+
     public function lessThan8HoursToOrderDate(): bool
     {
         return $this->currentDateTime > (clone $this->orderDate)

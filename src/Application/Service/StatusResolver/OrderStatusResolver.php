@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Application\Service\StatusResolver;
 
 use App\Application\Service\StatusResolver\DTO\OrderStatusDto;
-use App\Application\Service\StatusResolver\Exception\UndefinedStatusException;
 use App\Application\Service\StatusResolver\Factory\OrderStatusModelFactory;
 use App\Application\Service\StatusResolver\Trait\FindActualStatusTrait;
+use App\Application\Service\Workflow\RegistryInterface;
+use App\Application\Service\Workflow\WorkflowInterface;
 
 class OrderStatusResolver implements OrderStatusResolverInterface
 {
@@ -15,16 +16,18 @@ class OrderStatusResolver implements OrderStatusResolverInterface
 
     public function __construct(
         private readonly OrderStatusModelFactory $statusModelFactory,
+        private readonly RegistryInterface $registry,
     ) {
     }
 
     public function resolveStatus(OrderStatusDto $orderStatusDto): OrderStatusModel
     {
         $targetModel = $this->findTargetStatusModel($orderStatusDto);
+        /** @param WorkflowInterface $workflow */
+        $workflow = $this->registry->defineWorkflow($targetModel);
+        $workflow->applyTransitionIfItPossible($targetModel);
 
-        // todo: Реализовать переключение статусов в workflow
-
-        $targetModel->updateDescriptionAccordingState($orderStatusDto);
+        $targetModel->updateDescriptionAccordingState();
 
         return $targetModel;
     }
