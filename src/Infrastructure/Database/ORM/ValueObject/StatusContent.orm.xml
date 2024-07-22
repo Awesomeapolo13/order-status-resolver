@@ -5,8 +5,8 @@
 >
     <embeddable name="App\Domain\ValueObject\StatusContent">
         <field name="title" column="title" type="string" length="60" />
-        <field name="subTitle" column="sub_title" type="array" />
-        <field name="description" column="description" type="array" />
-        <field name="icoType" column="ico_type" type="array" />
+        <field name="subTitle" column="sub_title" type="json" />
+        <field name="description" column="description" type="json" />
+        <field name="icoType" column="ico_type" type="json" />
     </embeddable>
 </doctrine-mapping>
