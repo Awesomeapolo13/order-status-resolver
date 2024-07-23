@@ -9,7 +9,7 @@ use DateTime;
 readonly class PaymentDateTime
 {
     public function __construct(
-        private DateTime $paidAt,
+        private ?DateTime $paidAt,
         private DateTime $lastPayTime,
     ) {
     }

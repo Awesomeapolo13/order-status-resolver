@@ -68,7 +68,7 @@ readonly class StatusContent
 
     public function getDefaultIcoType(): ?string
     {
-        return $this->description[self::DEFAULT_CONTENT_KEY];
+        return $this->icoType[self::DEFAULT_CONTENT_KEY];
     }
 
     private function assertTitle(string $title): void

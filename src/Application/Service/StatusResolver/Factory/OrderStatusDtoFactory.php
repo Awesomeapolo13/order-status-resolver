@@ -46,10 +46,12 @@ class OrderStatusDtoFactory implements OrderStatusDtoFactoryInterface
                     new DateTime($request->currentSlotBegin),
                     $request->currentSlotLength,
                 ),
-                new PaymentDateTime(
+                isset($request->lastPayTime)
+                    ? new PaymentDateTime(
                     new DateTime($request->paidAt),
                     new DateTime($request->lastPayTime),
-                ),
+                )
+                    : null,
                 $request->courierSearchingTime
             )
                 : null

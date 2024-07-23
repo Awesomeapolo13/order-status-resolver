@@ -23,8 +23,8 @@ class GetActiveStatusController extends AbstractController
     public function __invoke(
         #[MapQueryString(validationFailedStatusCode: Response::HTTP_BAD_REQUEST)] GetActiveStatusRequest $request
     ): JsonResponse {
-        ($this->activeStatusUseCase)($request);
+        $result = ($this->activeStatusUseCase)($request);
 
-        return $this->json([]);
+        return $this->json($result);
     }
 }
