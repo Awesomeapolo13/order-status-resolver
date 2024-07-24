@@ -213,7 +213,7 @@ class OrderStatusModel
     /**
      * @throws Exception
      */
-    public function isSlotTimeRunningAndPaid(OrderStatusModel $orderStatusModel): bool
+    public function isSlotTimeRunningAndPaid(): bool
     {
         return $this->hasPaid()
             && $this->isCloseTimeSLot()

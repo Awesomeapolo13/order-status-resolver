@@ -48,13 +48,14 @@ class OrderStatusDtoFactory implements OrderStatusDtoFactoryInterface
                 ),
                 isset($request->lastPayTime)
                     ? new PaymentDateTime(
-                    new DateTime($request->paidAt),
+                    !is_null($request->paidAt) ? new DateTime($request->paidAt) : null,
                     new DateTime($request->lastPayTime),
                 )
                     : null,
-                $request->courierSearchingTime
+                $request->courierSearchingTime,
             )
-                : null
+                : null,
+            new DateTime($request->currentDate),
         );
     }
 }

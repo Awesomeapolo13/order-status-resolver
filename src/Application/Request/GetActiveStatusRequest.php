@@ -27,6 +27,7 @@ readonly class GetActiveStatusRequest
         public ?string $paidAt = null,
         public ?string $lastPayTime = null,
         public ?string $courierSearchingTime = null,
+        public ?string $currentDate = null
     ) {
     }
 }

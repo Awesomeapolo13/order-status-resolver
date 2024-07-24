@@ -66,7 +66,7 @@ readonly class StatusContent
         return $this->icoType;
     }
 
-    public function getDefaultIcoType(): ?string
+    public function getDefaultIcoType(): ?int
     {
         return $this->icoType[self::DEFAULT_CONTENT_KEY];
     }
