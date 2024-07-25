@@ -293,16 +293,15 @@ class PreDeliveryStatusProvider
     public static function readyNeedHurryToPayUnpaid(): array
     {
         $currentDate = new DateTime();
-        $lastPayDt = (clone $currentDate)->modify('+2 hours');
-        $lastPayTime = (clone $lastPayDt)->format('H:i');
-        $currentSlotBegun = (clone $currentDate)->modify('-1 hours');
+        $lastPayDt = LastPayDateProvider::needHurryToPayUnpaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::NeedHurryToPayUnpaid($currentDate);
 
         return [
             [
                 'statusId' => 2,
                 'isDelivery' => 1,
                 'isExpress' => 0,
-                'isPreparingOnProduction' => 1,
+                'isPreparingOnProduction' => 0,
                 'isAvailableInOffice' => 1,
                 'isFullyConfirmed' => 0,
                 'hasPaid' => 0,
@@ -327,6 +326,45 @@ class PreDeliveryStatusProvider
                 'description' => 'Пожалуйста, оплатите заказ, чтобы мы доставили его к выбранному Вами времени. '
                     . 'Сразу после оплаты мы назначим курьера.',
                 'icoType' => 2,
+            ],
+        ];
+    }
+
+    public static function readyNeedPayPaymentTimeExpired(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayPaymentTimeExpired($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::needPayPaymentTimeExpired($currentDate);
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 0,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => null,
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Не оплачен вовремя',
+                'subTitle' => null,
+                'description' => 'Не получили оплату по заказу.',
+                'icoType' => null,
             ],
         ];
     }

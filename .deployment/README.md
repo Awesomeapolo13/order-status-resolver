@@ -50,3 +50,5 @@ make dc_up_build
 ```bash
 make com_i
 ```
+
+5) Запустить тесты

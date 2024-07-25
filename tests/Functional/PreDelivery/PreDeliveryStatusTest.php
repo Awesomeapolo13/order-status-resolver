@@ -56,8 +56,8 @@ class PreDeliveryStatusTest extends WebTestCase
                 PreDeliveryStatusProvider::readyNeedPay(),
             'Статус 2 переход в 21 (не оплачен, истекает время оплаты)' =>
                 PreDeliveryStatusProvider::readyNeedHurryToPayUnpaid(),
-//            'Статус 2 переход в 24 (не оплачен, истекло время оплаты)' =>
-//                PreDeliveryStatusProvider::readyNeedPayPaymentTimeExpired(),
+            'Статус 2 переход в 24 (не оплачен, истекло время оплаты)' =>
+                PreDeliveryStatusProvider::readyNeedPayPaymentTimeExpired(),
 //            'Статус 2 переход в 22 (оплачен, время слота ещё не наступило)' =>
 //                PreDeliveryStatusProvider::readyNeedPayHasPaid(),
 //            'Статус 2 переход в 25 (оплачен, время слота наступили, но не окончено)' =>
