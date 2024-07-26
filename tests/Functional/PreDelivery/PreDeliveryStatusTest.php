@@ -64,6 +64,19 @@ class PreDeliveryStatusTest extends WebTestCase
                 PreDeliveryStatusProvider::readyNeedPayPaidSlotTimeRunning(),
             'Статус 2 переход в 26 (оплачен, время слота истекло)' =>
                 PreDeliveryStatusProvider::readyNeedPayPaidSlotTimeExpired(),
+            // Переход статуса 4 в 5
+            'Статус 4 переход в 5' =>
+                PreDeliveryStatusProvider::orderFinishedToTransfer(),
+            // Статус 5
+            'Статус 5 корректность тестов без переходов' =>
+                PreDeliveryStatusProvider::orderTransfer(),
+            // Статус 6
+            'Статус 6, можно оценить заказ' =>
+                PreDeliveryStatusProvider::recentlyDelivered(),
+            'Статус 6, не поставлена оценка и нельзя уже оценить' =>
+                PreDeliveryStatusProvider::canNotBeRatedDelivered(),
+            'Статус 6, поставлена оценка' =>
+                PreDeliveryStatusProvider::isRatedDelivered(),
         ];
     }
 }

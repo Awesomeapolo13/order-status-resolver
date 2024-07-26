@@ -645,4 +645,204 @@ class PreDeliveryStatusProvider
             ],
         ];
     }
+
+    public static function orderFinishedToTransfer(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::needPayPaymentTimeExpired($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+
+        return [
+            [
+                'statusId' => 4,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Курьер в пути',
+                'subTitle' => null,
+                'description' => 'Передали Ваш заказ курьеру. Ожидайте доставку.',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function orderTransfer(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::needPayPaymentTimeExpired($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+
+        return [
+            [
+                'statusId' => 5,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Курьер в пути',
+                'subTitle' => null,
+                'description' => 'Передали Ваш заказ курьеру. Ожидайте доставку.',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function recentlyDelivered(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::needPayPaymentTimeExpired($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+
+        return [
+            [
+                'statusId' => 6,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 1,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ доставлен',
+                'subTitle' => null,
+                'description' => 'Пожалуйста, оцените заказ',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function canNotBeRatedDelivered(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::needPayPaymentTimeExpired($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+
+        return [
+            [
+                'statusId' => 6,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ доставлен',
+                'subTitle' => null,
+                'description' => '',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function isRatedDelivered(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::needPayPaymentTimeExpired($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+
+        return [
+            [
+                'statusId' => 6,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 1,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ доставлен',
+                'subTitle' => null,
+                'description' => 'Спасибо за оценку',
+                'icoType' => null,
+            ],
+        ];
+    }
 }
