@@ -14,4 +14,11 @@ class OrderDateProvider
             ->modify('+1 days')
             ->setTime(0, 0);
     }
+
+    public static function getTwoBefore(DateTime $date): DateTime
+    {
+        return (clone $date)
+            ->modify('+2 days')
+            ->setTime(0, 0);
+    }
 }

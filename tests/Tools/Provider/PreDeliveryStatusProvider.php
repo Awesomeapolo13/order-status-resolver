@@ -12,7 +12,7 @@ class PreDeliveryStatusProvider
     public static function placed(): array
     {
         $currentDate = new DateTime();
-        $preDeliveryOrderDate = (clone $currentDate)->modify('+2 days');
+        $preDeliveryOrderDate = OrderDateProvider::getTwoBefore($currentDate);
 
         return [
             [
@@ -50,7 +50,7 @@ class PreDeliveryStatusProvider
     public static function placedWhenPrepareOnProd(): array
     {
         $currentDate = new DateTime();
-        $preDeliveryOrderDate = (clone $currentDate)->modify('+2 days');
+        $preDeliveryOrderDate = OrderDateProvider::getTwoBefore($currentDate);
 
         return [
             [
@@ -89,9 +89,7 @@ class PreDeliveryStatusProvider
     {
         $currentDate = new DateTime();
         // За день до даты заказа
-        $preDeliveryOrderDate = (clone $currentDate)
-            ->modify('+1 days')
-            ->setTime(0, 0);
+        $preDeliveryOrderDate = OrderDateProvider::getDayBefore($currentDate);
 
         return [
             [
@@ -241,6 +239,163 @@ class PreDeliveryStatusProvider
                 'currentDate' => $currentDate // За час до окончания текущего дня.
                     ->setTime(23, 0)
                     ->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ подтвержден не полностью',
+                'subTitle' => 'Подтвержден не полностью',
+                'description' => 'К сожалению, некоторых свежих ингредиентов нет в наличии. '
+                    . 'Вы можете оформить дозаказ. Соберем и упакуем заказ в одну доставку!',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function prepareOnStockAccepted(): array
+    {
+        $currentDate = new DateTime();
+        // За день до даты заказа
+        $preDeliveryOrderDate = OrderDateProvider::getDayBefore($currentDate);
+
+        return [
+            [
+                'statusId' => 1,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => (clone $preDeliveryOrderDate)
+                    ->setTime(16, 0)
+                    ->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Готовим заказ для доставки',
+                'subTitle' => null,
+                'description' => 'Заказ подтвержден. После сборки и упаковки пришлем уведомление.',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function prepareOnProductionAccepted(): array
+    {
+        $currentDate = new DateTime();
+        // За день до даты заказа
+        $preDeliveryOrderDate = OrderDateProvider::getDayBefore($currentDate);
+
+        return [
+            [
+                'statusId' => 1,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 1,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => (clone $preDeliveryOrderDate)
+                    ->setTime(16, 0)
+                    ->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Готовим заказ на производстве',
+                'subTitle' => null,
+                'description' => 'Заказ подтвержден. После сборки и упаковки пришлем уведомление.',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function partiallyConfirmedAccepted(): array
+    {
+        $currentDate = new DateTime();
+        // За день до даты заказа
+        $preDeliveryOrderDate = OrderDateProvider::getDayBefore($currentDate);
+
+        return [
+            [
+                'statusId' => 1,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 0,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => (clone $preDeliveryOrderDate)
+                    ->setTime(16, 0)
+                    ->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ подтвержден не полностью',
+                'subTitle' => 'Подтвержден не полностью',
+                'description' => 'Вы можете оформить дозаказ. Соберем и упакуем заказ в одну доставку!',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function partiallyConfirmedPrepareOnProdAccepted(): array
+    {
+        $currentDate = new DateTime();
+        // За день до даты заказа
+        $preDeliveryOrderDate = OrderDateProvider::getDayBefore($currentDate);
+
+        return [
+            [
+                'statusId' => 1,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 1,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 0,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => (clone $preDeliveryOrderDate)
+                    ->setTime(16, 0)
+                    ->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
             ],
             [
                 'title' => 'Заказ подтвержден не полностью',

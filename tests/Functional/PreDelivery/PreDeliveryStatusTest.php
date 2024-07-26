@@ -47,10 +47,11 @@ class PreDeliveryStatusTest extends WebTestCase
             'Из статуса 0 в 14' => PreDeliveryStatusProvider::partiallyConfirmed(),
             'Из статуса 0 в 14, подготовкой на производстве' => PreDeliveryStatusProvider::partiallyConfirmedPrepareOnProd(),
             // Статус 1 (Собирается)
-            'Из статуса 1 в 11' => PreDeliveryStatusProvider::prepareOnStock(),
-            'Из статуса 1 в 12' => PreDeliveryStatusProvider::prepareOnProduction(),
-            'Из статуса 1 в 14' => PreDeliveryStatusProvider::partiallyConfirmed(),
-            'Из статуса 1 в 14 c подготовкой на производстве' => PreDeliveryStatusProvider::partiallyConfirmedPrepareOnProd(),
+            'Из статуса 1 в 11' => PreDeliveryStatusProvider::prepareOnStockAccepted(),
+            'Из статуса 1 в 12' => PreDeliveryStatusProvider::prepareOnProductionAccepted(),
+            'Из статуса 1 в 14' => PreDeliveryStatusProvider::partiallyConfirmedAccepted(),
+            'Из статуса 1 в 14 c подготовкой на производстве' =>
+                PreDeliveryStatusProvider::partiallyConfirmedPrepareOnProdAccepted(),
             // Статус 2 (Готов)
             'Статус 2 без перехода (не оплачен, не истекло время оплаты)' =>
                 PreDeliveryStatusProvider::readyNeedPay(),
