@@ -216,7 +216,7 @@ class OrderStatusModel
     public function isSlotTimeRunningAndPaid(): bool
     {
         return $this->hasPaid()
-            && $this->isCloseTimeSLot()
+            && $this->isCloseTimeSlot()
             || (
                 $this->isCurrentSlotBegan()
                 && !$this->isCurrentSlotEnded()
@@ -226,7 +226,7 @@ class OrderStatusModel
     public function isSlotTimeExpiredAndPaid(): bool
     {
         return $this->hasPaid()
-            && !$this->isCloseTimeSLot()
+            && !$this->isCloseTimeSlot()
             && $this->isCurrentSlotEnded()
             && $this->isCourierSearchingTimeExpired();
     }
@@ -259,7 +259,7 @@ class OrderStatusModel
         return $this->currentDateTime >= (clone $lastStatusAt)->modify('+45 minutes');
     }
 
-    private function isCloseTimeSLot(): bool
+    private function isCloseTimeSlot(): bool
     {
         $slot = $this->delivery->getDeliverySlot();
 

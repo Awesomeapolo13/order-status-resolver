@@ -17,4 +17,9 @@ class LastPayDateProvider
     {
         return (clone $date)->modify('-1 hours');
     }
+
+    public static function needPayHasPaid(DateTime $date): DateTime
+    {
+        return (clone $date)->modify('+3 hours');
+    }
 }

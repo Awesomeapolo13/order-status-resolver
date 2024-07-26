@@ -50,7 +50,7 @@ framework:
                     from: '1'
                     to: '12'
                 is_payment_time_expired_from_2:
-                    guard: "subject.isSlotTimeExpiredAndPaid()"
+                    guard: "subject.isPaymentTimeExpired()"
                     from: '2'
                     to: '24'
                 is_need_to_hurry_up_unpaid_from_2:

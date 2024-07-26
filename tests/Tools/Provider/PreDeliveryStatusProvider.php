@@ -343,7 +343,7 @@ class PreDeliveryStatusProvider
                 'isExpress' => 0,
                 'isPreparingOnProduction' => 0,
                 'isAvailableInOffice' => 1,
-                'isFullyConfirmed' => 0,
+                'isFullyConfirmed' => 1,
                 'hasPaid' => 0,
                 'canRateOrder' => 0,
                 'isRated' => 0,
@@ -365,6 +365,128 @@ class PreDeliveryStatusProvider
                 'subTitle' => null,
                 'description' => 'Не получили оплату по заказу.',
                 'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function readyNeedPayHasPaid(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::needPayPaymentTimeExpired($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ оплачен. Назначим курьера к выбранному Вами времени',
+                'subTitle' => null,
+                'description' => 'Когда курьер будет найден, Вам придет уведомление.',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function readyNeedPayPaidSlotTimeRunning(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::readyNeedPayPaidSlotTimeRunning($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 20,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Назначаем курьера',
+                'subTitle' => null,
+                'description' => 'Когда курьер будет найден, Вам придет уведомление для отслеживания статуса доставки.',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function readyNeedPayPaidSlotTimeExpired(): array
+    {
+        $currentDate = new DateTime();
+        $lastPayDt = LastPayDateProvider::needPayHasPaid($currentDate);
+        $currentSlotBegun = CurrentSlotBeginProvider::readyNeedPayPaidSlotTimeExpired($currentDate);
+        $paidAt = PaidAtProvider::paidTwoHoursAgo($currentDate);
+        $deliveryDate = DeliveryDateProvider::readyNeedPayPaidSlotTimeExpired($currentDate);
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 20,
+                'currentSlotNum' => 30,
+                'currentSlotBegin' => $currentSlotBegun->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $deliveryDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $lastPayDt->format(DateTimeInterface::ATOM),
+                'paidAt' => $paidAt->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Назначаем курьера. Задерживаемся.',
+                'subTitle' => 'Задерживается',
+                'description' => 'К сожалению, пока курьер не найден. Пожалуйста, подождите немного. '
+                    . 'Как только найдем курьера —  Вам придет уведомление для отслеживания статуса доставки.',
+                'icoType' => 1,
             ],
         ];
     }

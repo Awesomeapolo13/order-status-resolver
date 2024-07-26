@@ -17,4 +17,14 @@ class CurrentSlotBeginProvider
     {
         return (clone $date)->modify('+3 hours');
     }
+
+    public static function readyNeedPayPaidSlotTimeRunning(DateTime $date): DateTime
+    {
+        return (clone $date)->modify('-45 minutes');
+    }
+
+    public static function readyNeedPayPaidSlotTimeExpired(DateTime $date): DateTime
+    {
+        return (clone $date)->modify('-2 hours');
+    }
 }
