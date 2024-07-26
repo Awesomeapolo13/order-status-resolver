@@ -2,41 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\PreDelivery;
+namespace App\Tests\Functional\Status\PreDelivery;
 
+use App\Tests\Functional\Status\BaseOrderStatusTest;
 use App\Tests\Tools\Provider\PreDeliveryStatusProvider;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\AbstractBrowser;
 
-class PreDeliveryStatusTest extends WebTestCase
+class PreDeliveryStatusTest extends BaseOrderStatusTest
 {
-    private AbstractBrowser $client;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->client = static::createClient();
-    }
-
-    /**
-     * @dataProvider statusProvider
-     */
-    public function testPreDeliveryStatuses($request, $expectedResponse): void
-    {
-        $this->client->request(
-            'GET',
-            '/status/active',
-            $request
-        );
-        $response = $this->client->getResponse();
-        $responseContent = $response->getContent();
-
-        $this->assertResponseIsSuccessful();
-        $this->assertNotEmpty($responseContent, 'Отсутствует тело ответа');
-        $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), $responseContent);
-    }
-
-    private function statusProvider(): array
+    protected function statusProvider(): array
     {
         return [
             // Статус 0 (Собирается)

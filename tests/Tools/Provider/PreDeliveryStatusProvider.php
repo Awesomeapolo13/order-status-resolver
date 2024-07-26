@@ -113,8 +113,7 @@ class PreDeliveryStatusProvider
                     ->format(DateTimeInterface::ATOM),
                 'currentSlotLength' => 30,
                 'deliveryDate' => $preDeliveryOrderDate->format(DateTimeInterface::ATOM),
-                'currentDate' => $currentDate // За 4 часа до окончания текущего дня.
-                    ->setTime(20, 0)
+                'currentDate' => CurrentDateProvider::fourHourBeforeEndDay($currentDate)
                     ->format(DateTimeInterface::ATOM),
             ],
             [
