@@ -63,3 +63,5 @@ t_run:
 	${DOCKER_EXEC_PHP} php bin/phpunit tests
 t_prp_s_run:
 	${DOCKER_EXEC_PHP} php bin/phpunit tests/Functional/Status/PrePickUp
+t_exd_s_run:
+	${DOCKER_EXEC_PHP} php bin/phpunit tests/Functional/Status/ExpressDelivery

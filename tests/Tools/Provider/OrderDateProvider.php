@@ -8,6 +8,11 @@ use DateTime;
 
 class OrderDateProvider
 {
+    public static function hourAgo(DateTime $date): DateTime
+    {
+        return (clone $date)->modify('-1 hour');
+    }
+
     public static function getDayBefore(DateTime $date): DateTime
     {
         return (clone $date)
