@@ -26,31 +26,22 @@ class PrePickUpStatusTest extends BaseOrderStatusTest
             'Переход из статуса 1 в 11' => PrePickUpStatusProvider::prepareOnStockAccepted(),
             'Переход из статуса 1 в 12' => PrePickUpStatusProvider::prepareOnProductionAccepted(),
             'Переход из статуса 1 в 14' => PrePickUpStatusProvider::partiallyConfirmedAccepted(),
-//            // Статус 2 и его переходы
-//            'Статус 2 без перехода (не оплачен, не нужно торопиться за заказом)' =>
-//                PrePickUpStatusReadyProvider::correctReadyUnpaid($statusList),
-//            'Статус 2 переход в 21 (не оплачен, нужно торопиться за заказом)' =>
-//                PrePickUpStatusReadyProvider::correctReadyNeedToHurryUnpaid($statusList),
-//            'Статус 2 переход в 22 (оплачен, не нужно торопиться за заказом)' =>
-//                PrePickUpStatusReadyProvider::correctReadyPaid($statusList),
-//            'Статус 2 переход в 23 (оплачен, нужно торопиться за заказом)' =>
-//                PrePickUpStatusReadyProvider::correctReadyNeedToHurryPaid($statusList),
-//            // Статус 3 и его переходы
-//            'Статус 3 без перехода (не оплачен, не нужно торопиться за заказом)' =>
-//                PrePickUpStatusPartiallyReadyProvider::correctPartiallyReadyUnpaid($statusList),
-//            'Статус 3 переход в 31 (не оплачен, нужно торопиться за заказом)' =>
-//                PrePickUpStatusPartiallyReadyProvider::correctPartiallyReadyNeedToHurryUnpaid($statusList),
-//            'Статус 3 переход в 32 (оплачен, не нужно торопиться за заказом)' =>
-//                PrePickUpStatusPartiallyReadyProvider::correctPartiallyReadyPaid($statusList),
-//            'Статус 3 переход в 33 (оплачен, нужно торопиться за заказом)' =>
-//                PrePickUpStatusPartiallyReadyProvider::correctPartiallyReadyNeedToHurryPaid($statusList),
-//            // Статус 4, изменение текста
-//            'Статус 4, можно оценить заказ' =>
-//                PrePickUpStatusFinishedProvider::correctRecentlyFinished($statusList),
-//            'Статус 4, не поставлена оценка и нельзя уже оценить' =>
-//                PrePickUpStatusFinishedProvider::correctCanNotBeRatedFinished($statusList),
-//            'Статус 4, поставлена оценка' =>
-//                PrePickUpStatusFinishedProvider::correctIsRatedFinished($statusList),
+            // Статус 2 и его переходы
+            'Статус 2 без перехода (не оплачен, не нужно торопиться за заказом)' =>
+                PrePickUpStatusProvider::readyUnpaid(),
+            'Статус 2 переход в 21 (не оплачен, нужно торопиться за заказом)' =>
+                PrePickUpStatusProvider::readyNeedToHurryUnpaid(),
+            'Статус 2 переход в 22 (оплачен, не нужно торопиться за заказом)' =>
+                PrePickUpStatusProvider::readyPaid(),
+            'Статус 2 переход в 23 (оплачен, нужно торопиться за заказом)' =>
+                PrePickUpStatusProvider::readyNeedToHurryPaid(),
+            // Статус 4, изменение текста
+            'Статус 4, можно оценить заказ' =>
+                PrePickUpStatusProvider::recentlyFinished(),
+            'Статус 4, не поставлена оценка и нельзя уже оценить' =>
+                PrePickUpStatusProvider::canNotBeRatedFinished(),
+            'Статус 4, поставлена оценка' =>
+                PrePickUpStatusProvider::isRatedFinished(),
         ];
     }
 }

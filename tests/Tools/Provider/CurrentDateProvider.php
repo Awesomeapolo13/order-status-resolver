@@ -12,4 +12,22 @@ class CurrentDateProvider
     {
         return (clone $date)->setTime(20, 0);
     }
+
+    public static function threeHourBeforeClosing(DateTime $date, string $closingTime): DateTime
+    {
+        $closeHour = substr($closingTime, 0, 2);
+
+        return (clone $date)
+            ->setTime((int)$closeHour, 0)
+            ->modify('-3 hour');
+    }
+
+    public static function hourBeforeClosing(DateTime $date, string $closingTime): DateTime
+    {
+        $closeHour = substr($closingTime, 0, 2);
+
+        return (clone $date)
+            ->setTime((int)$closeHour, 0)
+            ->modify('-1 hour');
+    }
 }

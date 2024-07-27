@@ -316,4 +316,226 @@ class PrePickUpStatusProvider
             ],
         ];
     }
+
+    public static function readyUnpaid(): array
+    {
+        $currentDate = new DateTime();
+        $orderDate = $currentDate;
+        $closingTime = StoreCloseTimeProvider::endInTenPM();
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $orderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => $closingTime,
+                'currentDate' => CurrentDateProvider::threeHourBeforeClosing($currentDate, $closingTime)
+                    ->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ готов к выдаче',
+                'subTitle' => null,
+                'description' => "Заказ ждет Вас в магазине! Заберите до {ttCloseTime}.",
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function readyNeedToHurryUnpaid(): array
+    {
+        $currentDate = new DateTime();
+        $orderDate = $currentDate;
+        $closingTime = StoreCloseTimeProvider::endInTenPM();
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $orderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => $closingTime,
+                'currentDate' => CurrentDateProvider::hourBeforeClosing($currentDate, $closingTime)
+                    ->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ готов к выдаче. Успейте забрать',
+                'subTitle' => 'Успейте забрать',
+                'description' => "Заказ ждет Вас в магазине! Заберите до {ttCloseTime}.",
+                'icoType' => 2,
+            ],
+        ];
+    }
+
+    public static function readyPaid(): array
+    {
+        $currentDate = new DateTime();
+        $orderDate = $currentDate;
+        $closingTime = StoreCloseTimeProvider::endInTenPM();
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $orderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => $closingTime,
+                'currentDate' => CurrentDateProvider::threeHourBeforeClosing($currentDate, $closingTime)
+                    ->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ собран и оплачен',
+                'subTitle' => null,
+                'description' => 'Заказ ждет Вас в магазине! Заберите до 21:00. '
+                    . 'При получении назовите код из уведомления.',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function readyNeedToHurryPaid(): array
+    {
+        $currentDate = new DateTime();
+        $orderDate = $currentDate;
+        $closingTime = StoreCloseTimeProvider::endInTenPM();
+
+        return [
+            [
+                'statusId' => 2,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $orderDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => $closingTime,
+                'currentDate' => CurrentDateProvider::hourBeforeClosing($currentDate, $closingTime)
+                    ->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ собран и оплачен. Успейте забрать',
+                'subTitle' => 'Успейте забрать',
+                'description' =>  "Заказ ждет Вас в магазине! Заберите до {ttCloseTime}.",
+                'icoType' => 2,
+            ],
+        ];
+    }
+
+    public static function recentlyFinished(): array
+    {
+        $currentDate = new DateTime();
+        $orderDate = $currentDate;
+        $closingTime = StoreCloseTimeProvider::endInTenPM();
+
+        return [
+            [
+                'statusId' => 4,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 1,
+                'isRated' => 0,
+                'orderDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => $closingTime,
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ получен',
+                'subTitle' => null,
+                'description' => 'Пожалуйста, оцените заказ',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function canNotBeRatedFinished(): array
+    {
+        $currentDate = new DateTime();
+        $orderDate = $currentDate;
+        $closingTime = StoreCloseTimeProvider::endInTenPM();
+
+        return [
+            [
+                'statusId' => 4,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => $closingTime,
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ получен',
+                'subTitle' => null,
+                'description' => '',
+                'icoType' => null,
+            ],
+        ];
+    }
+
+    public static function isRatedFinished(): array
+    {
+        $currentDate = new DateTime();
+        $orderDate = $currentDate;
+        $closingTime = StoreCloseTimeProvider::endInTenPM();
+
+        return [
+            [
+                'statusId' => 4,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 1,
+                'orderDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => $closingTime,
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Заказ получен',
+                'subTitle' => null,
+                'description' => 'Спасибо за оценку',
+                'icoType' => null,
+            ],
+        ];
+    }
 }
