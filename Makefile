@@ -59,3 +59,7 @@ fx_load:
 	${DOCKER_EXEC_PHP} php bin/console doctrine:fixtures:load
 init:
 	make com_i m_run fx_load
+t_run:
+	${DOCKER_EXEC_PHP} php bin/phpunit tests
+t_prp_s_run:
+	${DOCKER_EXEC_PHP} php bin/phpunit tests/Functional/Status/PrePickUp

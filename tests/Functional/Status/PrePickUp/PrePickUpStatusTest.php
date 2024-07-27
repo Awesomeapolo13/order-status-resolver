@@ -21,11 +21,11 @@ class PrePickUpStatusTest extends BaseOrderStatusTest
             'Переход из статуса 0 в 12' => PrePickUpStatusProvider::prepareOnProduction(),
             'Переход из статуса 0 в 13' => PrePickUpStatusProvider::transferringToShop(),
             'Переход из статуса 0 в 14' => PrePickUpStatusProvider::partiallyConfirmed(),
-//            // Статус 1 и его переходы
-//            'Переход из статуса 1 в 13' => PrePickUpStatusAcceptedProvider::correctTransferringToShop($statusList),
-//            'Переход из статуса 1 в 11' => PrePickUpStatusAcceptedProvider::correctPrepareOnStock($statusList),
-//            'Переход из статуса 1 в 12' => PrePickUpStatusAcceptedProvider::correctPrepareOnProduction($statusList),
-//            'Переход из статуса 1 в 14' => PrePickUpStatusAcceptedProvider::correctPartiallyConfirmed($statusList),
+            // Статус 1 и его переходы
+            'Переход из статуса 1 в 13' => PrePickUpStatusProvider::transferringToShopAccepted(),
+            'Переход из статуса 1 в 11' => PrePickUpStatusProvider::prepareOnStockAccepted(),
+            'Переход из статуса 1 в 12' => PrePickUpStatusProvider::prepareOnProductionAccepted(),
+            'Переход из статуса 1 в 14' => PrePickUpStatusProvider::partiallyConfirmedAccepted(),
 //            // Статус 2 и его переходы
 //            'Статус 2 без перехода (не оплачен, не нужно торопиться за заказом)' =>
 //                PrePickUpStatusReadyProvider::correctReadyUnpaid($statusList),
