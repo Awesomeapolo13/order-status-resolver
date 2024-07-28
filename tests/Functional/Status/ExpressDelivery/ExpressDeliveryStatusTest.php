@@ -32,19 +32,19 @@ class ExpressDeliveryStatusTest extends BaseOrderStatusTest
                 ExpressDeliveryStatusProvider::readyNeedPayPaidSlotTimeRunning(),
             'Статус 2 переход в 26 (оплачен, время слота истекло)' =>
                 ExpressDeliveryStatusProvider::readyNeedPayPaidSlotTimeExpired(),
-//            // Переход статуса 4 в 5
-//            'Статус 4 переход в 5 (потому что для доставки никто не должен знать о статусе 4)' =>
-//                ExpressDeliveryStatusProvider::correctOrderTransfer(),
-//            // Статус 5
-//            'Статус 5 корректность тестов без переходов' =>
-//                ExpressDeliveryStatusProvider::correctOrderTransfer(),
-//            // Статус 6, корректность текстов без переходов
-//            'Статус 6, можно оценить заказ' =>
-//                ExpressDeliveryStatusProvider::correctRecentlyDelivered(),
-//            'Статус 6, не поставлена оценка и нельзя уже оценить' =>
-//                ExpressDeliveryStatusProvider::correctCanNotBeRatedDelivered(),
-//            'Статус 6, поставлена оценка' =>
-//                ExpressDeliveryStatusProvider::correctIsRatedDelivered(),
+            // Переход статуса 4 в 5
+            'Статус 4 переход в 5 (потому что для доставки никто не должен знать о статусе 4)' =>
+                ExpressDeliveryStatusProvider::orderFinishedToTransfer(),
+            // Статус 5
+            'Статус 5 корректность тестов без переходов' =>
+                ExpressDeliveryStatusProvider::orderTransfer(),
+            // Статус 6, корректность текстов без переходов
+            'Статус 6, можно оценить заказ' =>
+                ExpressDeliveryStatusProvider::recentlyDelivered(),
+            'Статус 6, не поставлена оценка и нельзя уже оценить' =>
+                ExpressDeliveryStatusProvider::canNotBeRatedDelivered(),
+            'Статус 6, поставлена оценка' =>
+                ExpressDeliveryStatusProvider::isRatedDelivered(),
         ];
     }
 }
