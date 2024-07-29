@@ -42,7 +42,7 @@ class ExpressPickUpStatusProvider
     public static function accepted(): array
     {
         $currentDate = new DateTime();
-        $orderDate = DateTimeProvider::hourAgo($currentDate);
+        $orderDate = DateTimeProvider::halfHourAgo($currentDate);
 
         return [
             [
@@ -73,8 +73,8 @@ class ExpressPickUpStatusProvider
     public static function acceptedBuildTimeExpired(): array
     {
         $currentDate = new DateTime();
-        $orderDate = DateTimeProvider::hourAgo($currentDate);
-        $statusCheckedOutAt = DateTimeProvider::halfHourAgo($currentDate);
+        $orderDate = OrderDateProvider::hourAgo($currentDate);
+        $statusCheckedOutAt = DateTimeProvider::hourAgo($currentDate);
 
         return [
             [
@@ -97,7 +97,7 @@ class ExpressPickUpStatusProvider
                 'subTitle' => 'Задерживается',
                 'description' => 'К сожалению, задерживаемся со сборкой заказа. '
                     . 'Пришлем уведомление, когда заказ будет готов к выдаче.',
-                'icoType' => null,
+                'icoType' => 1,
             ],
         ];
     }
