@@ -7,7 +7,6 @@ namespace App\Application\Service\StatusResolver;
 use App\Application\Service\StatusResolver\Trait\FindActualStatusTrait;
 use App\Domain\Entity\OrderStatus;
 use App\Domain\ValueObject\Delivery;
-use App\Domain\ValueObject\DeliverySlot;
 use App\Domain\ValueObject\OrderState;
 use App\Domain\ValueObject\OrderType;
 use App\Domain\ValueObject\StatusContent;
@@ -18,6 +17,13 @@ use Exception;
 class OrderStatusModel
 {
     use FindActualStatusTrait;
+
+    /**
+     * Смещение времени для слота
+     */
+    private const DELIVERY_SLOT_TIME_SHIFT = '-20 minutes';
+    private const NEED_HURRY_TO_PAY_PICK_UP_SHIFT = '-2 hours';
+    private const PICK_UP_BUILD_IS_EXPIRED_SHIFT = '+45 minutes';
 
     public function __construct(
         private int             $statusId,
@@ -171,7 +177,8 @@ class OrderStatusModel
     {
         $closeTime = $this->workingTime->getTtCloseTime();
 
-        return (new DateTime($closeTime))->modify('-2 hours') < $this->currentDateTime;
+        return (new DateTime($closeTime))
+                ->modify(self::NEED_HURRY_TO_PAY_PICK_UP_SHIFT) < $this->currentDateTime;
     }
 
 
@@ -198,8 +205,7 @@ class OrderStatusModel
         return !$this->hasPaid()
             && !is_null($deliverySlot->getCurrentSlotBegin())
             && $this->currentDateTime >= (clone $deliverySlot->getCurrentSlotBegin())
-                // todo Вынести в константу или словарь (а лучше получать из вне)
-                ->modify('-20 minutes');
+                ->modify(self::DELIVERY_SLOT_TIME_SHIFT);
     }
 
     public function isPaymentTimeExpired(): bool
@@ -255,8 +261,8 @@ class OrderStatusModel
     public function isBuiltExpired(): bool
     {
         $lastStatusAt = $this->statusCheckedOutAt;
-        // todo Вынести 45 минут в константу
-        return $this->currentDateTime >= (clone $lastStatusAt)->modify('+45 minutes');
+
+        return $this->currentDateTime >= (clone $lastStatusAt)->modify(self::PICK_UP_BUILD_IS_EXPIRED_SHIFT);
     }
 
     private function isCloseTimeSlot(): bool
