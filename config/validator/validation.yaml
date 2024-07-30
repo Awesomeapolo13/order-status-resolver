@@ -1,0 +1,38 @@
+App\Application\Request\GetActiveStatusRequest:
+  properties:
+    statusId:
+      - NotNull:
+          message: 'Не передан обязательный параметр statusId'
+    isDelivery:
+      - NotNull:
+          message: 'Не передан обязательный параметр isDelivery'
+    isExpress:
+      - NotNull:
+          message: 'Не передан обязательный параметр isExpress'
+    isPreparingOnProduction:
+      - NotNull:
+          message: 'Не передан обязательный параметр isPreparingOnProduction'
+    isAvailableInOffice:
+      - NotNull:
+          message: 'Не передан обязательный параметр isAvailableInOffice'
+    isFullyConfirmed:
+      - NotNull:
+          message: 'Не передан обязательный параметр isFullyConfirmed'
+    hasPaid:
+      - NotNull:
+          message: 'Не передан обязательный параметр hasPaid'
+    canRateOrder:
+      - NotNull:
+          message: 'Не передан обязательный параметр canRateOrder'
+    isRated:
+      - NotNull:
+          message: 'Не передан обязательный параметр isRated'
+    orderDate:
+      - NotNull:
+          message: 'Не передан обязательный параметр orderDate'
+    statusCheckedOutAt:
+      - NotNull:
+          message: 'Не передан обязательный параметр statusCheckedOutAt'
+    ttCloseTime:
+      - NotNull:
+          message: 'Не передан обязательный параметр ttCloseTime'

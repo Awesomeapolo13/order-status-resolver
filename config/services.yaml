@@ -12,3 +12,9 @@ services:
             - '../src/Domain/Entity/'
             - '../src/Domain/ValueObject/'
             - '../src/Kernel.php'
+
+    App\Infrastructure\EventListener\ExceptionListener:
+        arguments:
+            $env: '%kernel.environment%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
