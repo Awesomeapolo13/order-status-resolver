@@ -30,9 +30,27 @@ App\Application\Request\GetActiveStatusRequest:
     orderDate:
       - NotNull:
           message: 'Не передан обязательный параметр orderDate'
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
     statusCheckedOutAt:
       - NotNull:
           message: 'Не передан обязательный параметр statusCheckedOutAt'
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
     ttCloseTime:
       - NotNull:
           message: 'Не передан обязательный параметр ttCloseTime'
+    currentSlotBegin:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+    deliveryDate:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+    currentDate:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'

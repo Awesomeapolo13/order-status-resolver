@@ -451,4 +451,58 @@ class RequestValidationProvider
             ],
         ];
     }
+
+    public static function wrongDateFormat(): array
+    {
+        $currentDate = new DateTime();
+
+        return [
+            [
+                'statusId' => 0,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::RFC1123),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::RFC1123),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentDate->format(DateTimeInterface::RFC1123),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::RFC1123),
+                'currentDate' => $currentDate->format(DateTimeInterface::RFC1123),
+            ],
+            [
+                'title' => 'Некорректные данные запроса',
+                'errors' => [
+                    [
+                        'name' => 'orderDate',
+                        'message' => 'Некорректный формат даты',
+                    ],
+                    [
+                        'name' => 'statusCheckedOutAt',
+                        'message' => 'Некорректный формат даты',
+                    ],
+                    [
+                        'name' => 'currentSlotBegin',
+                        'message' => 'Некорректный формат даты',
+                    ],
+                    [
+                        'name' => 'deliveryDate',
+                        'message' => 'Некорректный формат даты',
+                    ],
+                    [
+                        'name' => 'currentDate',
+                        'message' => 'Некорректный формат даты',
+                    ],
+                ],
+            ],
+        ];
+    }
 }

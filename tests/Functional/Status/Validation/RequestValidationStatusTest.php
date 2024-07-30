@@ -55,6 +55,7 @@ class RequestValidationStatusTest extends WebTestCase
             'Отсутствует параметр orderDate' => RequestValidationProvider::emptyOrderDate(),
             'Отсутствует параметр statusCheckedOutAt' => RequestValidationProvider::emptyStatusCheckedOutAt(),
             'Отсутствует параметр ttCloseTime' => RequestValidationProvider::emptyTtCloseTime(),
+            'Некорректный формат даты заказа orderDate' => RequestValidationProvider::wrongDateFormat(),
         ];
     }
 }
