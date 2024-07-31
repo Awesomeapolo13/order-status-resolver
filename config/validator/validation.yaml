@@ -59,6 +59,17 @@ App\Application\Request\GetActiveStatusRequest:
       - DateTime:
           format: 'Y-m-d\TH:i:sP'
           message: 'Некорректный формат даты'
+    paidAt:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+      - Expression:
+          expression: "this.isDelivery === null | this.isDelivery === false | this.isDelivery === true & (this.hasPaid === null | this.hasPaid === false | (this.hasPaid === true & this.paidAt !== null))"
+          message: 'Отсутствует параметр paidAt'
+    lastPayTime:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
     currentDate:
       - DateTime:
           format: 'Y-m-d\TH:i:sP'

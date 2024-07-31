@@ -75,6 +75,7 @@ class RequestValidationStatusTest extends WebTestCase
             'Отсутствует параметр ttCloseTime' => RequestValidationProvider::emptyTtCloseTime(),
             'Некорректный формат даты заказа orderDate' => RequestValidationProvider::wrongDateFormat(),
             'Отсутствуют данные о доставке заказа' => RequestValidationProvider::emptyDeliveryData(),
+            'Отсутствуют данные о времени оплаты, после её совершения' => RequestValidationProvider::emptyPaidAtWhenHasPaid(),
         ];
     }
 

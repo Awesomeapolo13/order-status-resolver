@@ -32,6 +32,8 @@ class RequestValidationProvider
                 'currentSlotBegin' => $currentDate->format(DateTimeInterface::ATOM),
                 'currentSlotLength' => 30,
                 'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'paidAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $currentDate->format(DateTimeInterface::ATOM),
                 'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
             ],
             [
@@ -556,6 +558,8 @@ class RequestValidationProvider
                 'currentSlotBegin' => $currentDate->format(DateTimeInterface::RFC1123),
                 'currentSlotLength' => 30,
                 'deliveryDate' => $currentDate->format(DateTimeInterface::RFC1123),
+                'paidAt' => $currentDate->format(DateTimeInterface::RFC1123),
+                'lastPayTime' => $currentDate->format(DateTimeInterface::RFC1123),
                 'currentDate' => $currentDate->format(DateTimeInterface::RFC1123),
             ],
             [
@@ -575,6 +579,14 @@ class RequestValidationProvider
                     ],
                     [
                         'name' => 'deliveryDate',
+                        'message' => 'Некорректный формат даты',
+                    ],
+                    [
+                        'name' => 'paidAt',
+                        'message' => 'Некорректный формат даты',
+                    ],
+                    [
+                        'name' => 'lastPayTime',
                         'message' => 'Некорректный формат даты',
                     ],
                     [
@@ -639,6 +651,45 @@ class RequestValidationProvider
                 'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
             ],
             [
+            ],
+        ];
+    }
+
+    public static function emptyPaidAtWhenHasPaid(): array
+    {
+        $currentDate = new DateTime();
+
+        return [
+            [
+                'statusId' => 0,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 1,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentDate->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'lastPayTime' => $currentDate->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Некорректные данные запроса',
+                'errors' => [
+                    [
+                        'name' => 'paidAt',
+                        'message' => 'Отсутствует параметр paidAt',
+                    ]
+                ],
             ],
         ];
     }
