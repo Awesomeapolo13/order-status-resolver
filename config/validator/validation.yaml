@@ -3,9 +3,18 @@ App\Application\Request\GetActiveStatusRequest:
     statusId:
       - NotNull:
           message: 'Не передан обязательный параметр statusId'
+      - Choice:
+          message: 'Неизвестный статус заказа {{ value }}'
+          callback: [App\Application\Enum\StatusIdEnum, 'values']
+      - Expression:
+          expression: "this.isDelivery === null | this.isDelivery === true | (this.isDelivery === false & this.statusId not in [5, 6])"
+          message: 'Недопустимый statusId {{ value }} для самовывоза'
     isDelivery:
       - NotNull:
           message: 'Не передан обязательный параметр isDelivery'
+      - Expression:
+          expression: "this.isDelivery !== null & (this.isDelivery === false | (this.isDelivery == true & (this.nearestSlotNum != null | this.currentSlotNum != null | this.currentSlotBegin != null | this.currentSlotLength != null | this.deliveryDate != null | this.courierSearchingTime != null)))"
+          message: 'Не переданы данные доставки'
     isExpress:
       - NotNull:
           message: 'Не передан обязательный параметр isExpress'

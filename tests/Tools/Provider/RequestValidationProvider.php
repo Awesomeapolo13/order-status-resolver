@@ -46,6 +46,82 @@ class RequestValidationProvider
         ];
     }
 
+    public static function wrongStatusId(): array
+    {
+        $currentDate = new DateTime();
+
+        return [
+            [
+                'statusId' => 666,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentDate->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Некорректные данные запроса',
+                'errors' => [
+                    [
+                        'name' => 'statusId',
+                        'message' => 'Неизвестный статус заказа 666',
+                    ]
+                ],
+            ],
+        ];
+    }
+
+    public static function wrongPickUpStatusId(): array
+    {
+        $currentDate = new DateTime();
+
+        return [
+            [
+                'statusId' => 5,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'courierSearchingTime' => '20',
+                'nearestSlotNum' => 23,
+                'currentSlotNum' => 20,
+                'currentSlotBegin' => $currentDate->format(DateTimeInterface::ATOM),
+                'currentSlotLength' => 30,
+                'deliveryDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Некорректные данные запроса',
+                'errors' => [
+                    [
+                        'name' => 'statusId',
+                        'message' => 'Недопустимый statusId 5 для самовывоза',
+                    ]
+                ],
+            ],
+        ];
+    }
+
     public static function emptyIsDelivery(): array
     {
         $currentDate = new DateTime();
@@ -77,7 +153,11 @@ class RequestValidationProvider
                     [
                         'name' => 'isDelivery',
                         'message' => 'Не передан обязательный параметр isDelivery',
-                    ]
+                    ],
+                    [
+                        'name' => 'isDelivery',
+                        'message' => 'Не переданы данные доставки',
+                    ],
                 ],
             ],
         ];
@@ -502,6 +582,63 @@ class RequestValidationProvider
                         'message' => 'Некорректный формат даты',
                     ],
                 ],
+            ],
+        ];
+    }
+
+    public static function emptyDeliveryData(): array
+    {
+        $currentDate = new DateTime();
+
+        return [
+            [
+                'statusId' => 0,
+                'isDelivery' => 1,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
+                'title' => 'Некорректные данные запроса',
+                'errors' => [
+                    [
+                        'name' => 'isDelivery',
+                        'message' => 'Не переданы данные доставки',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public static function emptyDeliveryDataWhenPickUp(): array
+    {
+        $currentDate = new DateTime();
+
+        return [
+            [
+                'statusId' => 0,
+                'isDelivery' => 0,
+                'isExpress' => 0,
+                'isPreparingOnProduction' => 0,
+                'isAvailableInOffice' => 1,
+                'isFullyConfirmed' => 1,
+                'hasPaid' => 0,
+                'canRateOrder' => 0,
+                'isRated' => 0,
+                'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
+                'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
+                'ttCloseTime' => '22:00',
+                'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
+            ],
+            [
             ],
         ];
     }

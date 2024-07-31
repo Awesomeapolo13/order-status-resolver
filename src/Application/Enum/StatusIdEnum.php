@@ -14,5 +14,10 @@ enum StatusIdEnum: int
     case FINISHED = 4;
     case TRANSFER_COURIER = 5;
     case DELIVERED = 6;
+
+    public static function values(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }
 

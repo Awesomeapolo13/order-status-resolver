@@ -20,7 +20,7 @@ class RequestValidationStatusTest extends WebTestCase
     }
 
     /**
-     * @dataProvider statusProvider
+     * @dataProvider wrongValidationProvider
      */
     public function testValidationErrorResponse($request, $expectedResponse): void
     {
@@ -40,10 +40,28 @@ class RequestValidationStatusTest extends WebTestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), $responseContent);
     }
 
-    protected function statusProvider(): array
+    /**
+     * @dataProvider successValidationProvider
+     */
+    public function testValidationSuccessResponse($request, $expectedResponse): void
+    {
+        $this->client->request(
+            'GET',
+            '/status/active',
+            $request
+        );
+        $response = $this->client->getResponse();
+        $responseContent = $response->getContent();
+        $this->assertResponseIsSuccessful('Ожидаемый HTTP-статус 200');
+        $this->assertNotEmpty($responseContent, 'Отсутствует тело ответа');
+    }
+
+    protected function wrongValidationProvider(): array
     {
         return [
             'Отсутствует параметр statusId' => RequestValidationProvider::emptyStatusId(),
+            'Некорректный параметр statusId' => RequestValidationProvider::wrongStatusId(),
+            'Некорректный параметр statusId для самовывоза' => RequestValidationProvider::wrongPickUpStatusId(),
             'Отсутствует параметр isDelivery' => RequestValidationProvider::emptyIsDelivery(),
             'Отсутствует параметр isExpress' => RequestValidationProvider::emptyIsExpress(),
             'Отсутствует параметр isPreparingOnProduction' => RequestValidationProvider::emptyIsPreparingOnProduction(),
@@ -56,6 +74,14 @@ class RequestValidationStatusTest extends WebTestCase
             'Отсутствует параметр statusCheckedOutAt' => RequestValidationProvider::emptyStatusCheckedOutAt(),
             'Отсутствует параметр ttCloseTime' => RequestValidationProvider::emptyTtCloseTime(),
             'Некорректный формат даты заказа orderDate' => RequestValidationProvider::wrongDateFormat(),
+            'Отсутствуют данные о доставке заказа' => RequestValidationProvider::emptyDeliveryData(),
+        ];
+    }
+
+    public function successValidationProvider(): array
+    {
+        return [
+            'Отсутствуют данные о доставке для самовывоза' => RequestValidationProvider::emptyDeliveryDataWhenPickUp(),
         ];
     }
 }
