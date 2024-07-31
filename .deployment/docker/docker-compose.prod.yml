@@ -1,0 +1,24 @@
+version: "3.8"
+
+networks:
+  general:
+    external: true
+    name: general
+
+services:
+  php-fpm:
+    container_name: php-fpm
+    networks:
+      - general
+    build:
+      context: ../../
+      dockerfile: ./.deployment/docker/php-fpm/Dockerfile
+      args:
+        PUID: ${PUID}
+        PGID: ${PGID}
+        INSTALL_XDEBUG: ${INSTALL_XDEBUG}
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+    volumes:
+      - ./../../:/var/www/status-resolver
