@@ -2,8 +2,8 @@ name: CI/CD Workflow
 
 on:
   pull_request:
-    branches: [master]
-    types: [opened, closed]
+    branches: [ master ]
+    types: [ opened, closed ]
 
 jobs:
   build:
@@ -13,12 +13,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build Docker image
         run: |
-          ls -la
-#          cp env.dist .env
-#          cp .deployment/docker/.env.dist .deployment/docker/.env
-          make dc_build
-          make dc_up
-          make com_i
+               ls -la
+          #          cp env.dist .env
+          #          cp .deployment/docker/.env.dist .deployment/docker/.env
+               make dc_build
+               make dc_up
+               make com_i
 
   deploy_prod:
     runs-on: ubuntu-latest
