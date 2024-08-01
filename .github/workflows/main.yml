@@ -38,7 +38,8 @@ jobs:
         run: |
           echo "Deploying to master server..."
           echo "$SSH_PRIVATE_KEY_PROD" > private_key
-          ssh -o StrictHostKeyChecking=no -i private_key $PROD_DEPLOY_USER@$PROD_HOST << 'EOF'
+          chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST << 'EOF'
                eval $(ssh-agent -s)
                ssh-add ~/.ssh/prod_ubuntu_dep_vars
                git clone $DEPLOY_DATA_SRC "$DEPLOY_VARS_DIR"
