@@ -25,7 +25,6 @@ class GetActiveStatusUseCase
         $statuses = $this->orderStatusRepository->findStatusesByType(
             new GetStatusesByTypeQuery($request->isDelivery, $request->isExpress)
         );
-        // ToDo Возможно никакое ДТО тут вовсе не нужно и стоит сразу создать модель.
         $orderStatusDto = $this->orderStatusDtoFactory->createFromRequest($request, $statuses);
         $statusModel = $this->orderStatusResolver->resolveStatus($orderStatusDto);
 
