@@ -42,18 +42,18 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST << 'EOF'
                eval $(ssh-agent -s)
                ssh-add ~/.ssh/prod_ubuntu_dep_vars
-               git clone $DEPLOY_DATA_SRC "$DEPLOY_VARS_DIR"
-               rm -rf $PREVIOUS_DEPLOY_DIR/{*,.*}
-               cd $CURRENT_DEPLOY_DIR && make dc_down
-               mv -T $CURRENT_DEPLOY_DIR $PREVIOUS_DEPLOY_DIR
+               git clone "$DEPLOY_DATA_SRC" "$DEPLOY_VARS_DIR"
+               rm -rf "$PREVIOUS_DEPLOY_DIR"/{*,.*}
+               cd "$CURRENT_DEPLOY_DIR" && make dc_down
+               mv -T "$CURRENT_DEPLOY_DIR" "$PREVIOUS_DEPLOY_DIR"
                eval $(ssh-agent -s)
                ssh-add ~/.ssh/prod_srv_id
-               git clone $PROJECT_SRC_SSH "$CURRENT_DEPLOY_DIR"
-               cp $DEPLOY_VARS_DIR/order-status-resolver/.env.prod $CURRENT_DEPLOY_DIR/.env
-               cp $DEPLOY_VARS_DIR/order-status-resolver/deployment/.env.prod $CURRENT_DEPLOY_DIR/.deployment/docker/.env
+               git clone "$PROJECT_SRC_SSH" "$CURRENT_DEPLOY_DIR"
+               cp "$DEPLOY_VARS_DIR"/order-status-resolver/.env.prod" "$CURRENT_DEPLOY_DIR"/.env
+               cp "$DEPLOY_VARS_DIR"/order-status-resolver/deployment/.env.prod "$CURRENT_DEPLOY_DIR"/.deployment/docker/.env
                make dc_up_build
                make com_i
                make m_run
-               rm -rf $DEPLOY_VARS_DIR/{*,.*}
+               rm -rf "$DEPLOY_VARS_DIR"/{*,.*}
           EOF
         shell: bash
