@@ -51,9 +51,19 @@ test:
 	${DOCKER_EXEC_PHP} php bin/phpunit
 cache:
 	${DOCKER_EXEC_PHP} php bin/console cache:clear
+m_create:
+	${DOCKER_EXEC_PHP} php bin/console doctrine:migration:diff
 m_run:
 	${DOCKER_EXEC_PHP} php bin/console doctrine:migration:migrate
 fx_load:
 	${DOCKER_EXEC_PHP} php bin/console doctrine:fixtures:load
 init:
 	make com_i m_run fx_load
+t_run:
+	${DOCKER_EXEC_PHP} php bin/phpunit tests
+t_prp_s_run:
+	${DOCKER_EXEC_PHP} php bin/phpunit tests/Functional/Status/PrePickUp
+t_exd_s_run:
+	${DOCKER_EXEC_PHP} php bin/phpunit tests/Functional/Status/ExpressDelivery
+t_exp_s_run:
+	${DOCKER_EXEC_PHP} php bin/phpunit tests/Functional/Status/ExpressPickUp

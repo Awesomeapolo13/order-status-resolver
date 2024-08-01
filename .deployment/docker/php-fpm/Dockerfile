@@ -29,10 +29,10 @@ RUN apk --no-cache add shadow && \
     usermod -o -u ${PUID} -g www-data www-data
 
 # Source project
-RUN mkdir /var/www/homework \
-    && chown www-data:www-data /var/www/homework
-COPY --chown=www-data:www-data ./ /var/www/homework
-WORKDIR /var/www/homework
+RUN mkdir /var/www/status-resolver \
+    && chown www-data:www-data /var/www/status-resolver
+COPY --chown=www-data:www-data ./ /var/www/status-resolver
+WORKDIR /var/www/status-resolver
 
 USER www-data
 

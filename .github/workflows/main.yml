@@ -1,0 +1,57 @@
+name: CI/CD Workflow
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, closed]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Docker image
+        run: |
+          cp env.dist .env
+          cp .deployment/docker/.env.dist .deployment/docker/.env
+          make dc_build
+          make dc_up
+          make com_i
+
+  deploy_prod:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
+    env:
+      PROJECT_SRC_SSH: ${{ secrets.PROJECT_SRC_SSH }}
+      SSH_PRIVATE_KEY_PROD: ${{ secret.SSH_PRIVATE_KEY_PROD }}
+      PROD_HOST: ${{ secret.PROD_HOST }}
+      PROD_DEPLOY_USER: ${{ secret.PROD_DEPLOY_USER }}
+      CURRENT_DEPLOY_DIR: ${{ secret.CURRENT_DEPLOY_DIR }}
+      PREVIOUS_DEPLOY_DIR: ${{ secret.PREVIOUS_DEPLOY_DIR }}
+      DEPLOY_VARS_DIR: ${{ secret.DEPLOY_VARS_DIR }}
+      DEPLOY_DATA_SRC: ${{ secret.DEPLOY_DATA_SRC }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to master
+        run: |
+          echo "Deploying to master server..."
+          ssh -o StrictHostKeyChecking=no -i private_key $PROD_DEPLOY_USER@$PROD_HOST << 'EOF'
+               eval $(ssh-agent -s)
+               ssh-add ~/.ssh/prod_ubuntu_dep_vars
+               git clone $DEPLOY_DATA_SRC "$DEPLOY_VARS_DIR"
+               rm -rf $PREVIOUS_DEPLOY_DIR/{*,.*}
+               cd $CURRENT_DEPLOY_DIR && make dc_down
+               mv -T $CURRENT_DEPLOY_DIR $PREVIOUS_DEPLOY_DIR
+               eval $(ssh-agent -s)
+               ssh-add ~/.ssh/prod_srv_id
+               git clone $PROJECT_SRC_SSH "$CURRENT_DEPLOY_DIR"
+               cp $DEPLOY_VARS_DIR/order-status-resolver/.env.prod $CURRENT_DEPLOY_DIR/.env
+               cp $DEPLOY_VARS_DIR/order-status-resolver/deployment/.env.prod $CURRENT_DEPLOY_DIR/.deployment/docker/.env
+               make dc_up_build
+               make com_i
+               make m_run
+               rm -rf $DEPLOY_VARS_DIR/{*,.*}
+          EOF
+        shell: bash

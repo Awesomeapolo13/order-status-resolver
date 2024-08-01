@@ -1,0 +1,76 @@
+App\Application\Request\GetActiveStatusRequest:
+  properties:
+    statusId:
+      - NotNull:
+          message: 'Не передан обязательный параметр statusId'
+      - Choice:
+          message: 'Неизвестный статус заказа {{ value }}'
+          callback: [App\Application\Enum\StatusIdEnum, 'values']
+      - Expression:
+          expression: "this.isDelivery === null | this.isDelivery === true | (this.isDelivery === false & this.statusId not in [5, 6])"
+          message: 'Недопустимый statusId {{ value }} для самовывоза'
+    isDelivery:
+      - NotNull:
+          message: 'Не передан обязательный параметр isDelivery'
+      - Expression:
+          expression: "this.isDelivery !== null & (this.isDelivery === false | (this.isDelivery == true & (this.nearestSlotNum != null | this.currentSlotNum != null | this.currentSlotBegin != null | this.currentSlotLength != null | this.deliveryDate != null | this.courierSearchingTime != null)))"
+          message: 'Не переданы данные доставки'
+    isExpress:
+      - NotNull:
+          message: 'Не передан обязательный параметр isExpress'
+    isPreparingOnProduction:
+      - NotNull:
+          message: 'Не передан обязательный параметр isPreparingOnProduction'
+    isAvailableInOffice:
+      - NotNull:
+          message: 'Не передан обязательный параметр isAvailableInOffice'
+    isFullyConfirmed:
+      - NotNull:
+          message: 'Не передан обязательный параметр isFullyConfirmed'
+    hasPaid:
+      - NotNull:
+          message: 'Не передан обязательный параметр hasPaid'
+    canRateOrder:
+      - NotNull:
+          message: 'Не передан обязательный параметр canRateOrder'
+    isRated:
+      - NotNull:
+          message: 'Не передан обязательный параметр isRated'
+    orderDate:
+      - NotNull:
+          message: 'Не передан обязательный параметр orderDate'
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+    statusCheckedOutAt:
+      - NotNull:
+          message: 'Не передан обязательный параметр statusCheckedOutAt'
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+    ttCloseTime:
+      - NotNull:
+          message: 'Не передан обязательный параметр ttCloseTime'
+    currentSlotBegin:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+    deliveryDate:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+    paidAt:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+      - Expression:
+          expression: "this.isDelivery === null | this.isDelivery === false | this.isDelivery === true & (this.hasPaid === null | this.hasPaid === false | (this.hasPaid === true & this.paidAt !== null))"
+          message: 'Отсутствует параметр paidAt'
+    lastPayTime:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
+    currentDate:
+      - DateTime:
+          format: 'Y-m-d\TH:i:sP'
+          message: 'Некорректный формат даты'
