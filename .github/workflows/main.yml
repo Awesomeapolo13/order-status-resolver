@@ -25,13 +25,13 @@ jobs:
       github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
     env:
       PROJECT_SRC_SSH: ${{ secrets.PROJECT_SRC_SSH }}
-      SSH_PRIVATE_KEY_PROD: ${{ secret.SSH_PRIVATE_KEY_PROD }}
-      PROD_HOST: ${{ secret.PROD_HOST }}
-      PROD_DEPLOY_USER: ${{ secret.PROD_DEPLOY_USER }}
-      CURRENT_DEPLOY_DIR: ${{ secret.CURRENT_DEPLOY_DIR }}
-      PREVIOUS_DEPLOY_DIR: ${{ secret.PREVIOUS_DEPLOY_DIR }}
-      DEPLOY_VARS_DIR: ${{ secret.DEPLOY_VARS_DIR }}
-      DEPLOY_DATA_SRC: ${{ secret.DEPLOY_DATA_SRC }}
+      SSH_PRIVATE_KEY_PROD: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
+      PROD_HOST: ${{ secrets.PROD_HOST }}
+      PROD_DEPLOY_USER: ${{ secrets.PROD_DEPLOY_USER }}
+      CURRENT_DEPLOY_DIR: ${{ secrets.CURRENT_DEPLOY_DIR }}
+      PREVIOUS_DEPLOY_DIR: ${{ secrets.PREVIOUS_DEPLOY_DIR }}
+      DEPLOY_VARS_DIR: ${{ secrets.DEPLOY_VARS_DIR }}
+      DEPLOY_DATA_SRC: ${{ secrets.DEPLOY_DATA_SRC }}
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to master
