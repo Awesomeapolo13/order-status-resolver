@@ -44,7 +44,7 @@ dc_restart:
 app_bash:
 	${DOCKER_EXEC_PHP} bash
 com_i:
-	${DOCKER_EXEC_PHP} composer install
+	docker exec php-fpm composer install
 com_r:
 	${DOCKER_EXEC_PHP} composer require
 test:
