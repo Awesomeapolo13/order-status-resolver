@@ -47,8 +47,8 @@ jobs:
                eval $(ssh-agent -s)
                ssh-add ~/.ssh/prod_srv_id
                git clone $PROJECT_SRC_SSH "$CURRENT_DEPLOY_DIR"
-               cp $DEPLOY_VARS_DIR/order-status-resolver/.env $CURRENT_DEPLOY_DIR/.env
-               cp $DEPLOY_VARS_DIR/order-status-resolver/deployment/.env $CURRENT_DEPLOY_DIR/.deployment/docker/.env
+               cp $DEPLOY_VARS_DIR/order-status-resolver/.env.prod $CURRENT_DEPLOY_DIR/.env
+               cp $DEPLOY_VARS_DIR/order-status-resolver/deployment/.env.prod $CURRENT_DEPLOY_DIR/.deployment/docker/.env
                make dc_up_build
                make com_i
                make m_run
