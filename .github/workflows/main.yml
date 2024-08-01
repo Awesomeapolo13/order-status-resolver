@@ -14,8 +14,6 @@ jobs:
       - name: Build Docker image
         run: |
                ls -la
-          #          cp env.dist .env
-          #          cp .deployment/docker/.env.dist .deployment/docker/.env
                make dc_build
                make dc_up
                make com_i
