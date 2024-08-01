@@ -13,8 +13,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build Docker image
         run: |
-          cp env.dist .env
-          cp .deployment/docker/.env.dist .deployment/docker/.env
+          ls -la
+#          cp env.dist .env
+#          cp .deployment/docker/.env.dist .deployment/docker/.env
           make dc_build
           make dc_up
           make com_i
