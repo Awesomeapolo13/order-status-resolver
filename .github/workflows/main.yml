@@ -13,11 +13,16 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build Docker image
         run: |
-               cp .env.dist .env
-               cp .deployment/docker/.env.dist .deployment/docker/.env
-               make dc_build
-               make dc_up
-               make com_i
+          cp .env.dist .env
+          cp .deployment/docker/.env.dist .deployment/docker/.env
+          make dc_build
+          make dc_up
+          
+          # Проверка прав доступа и наличия директорий перед запуском установки зависимостей
+          docker exec php-fpm ls -la /var/www/status-resolver
+          docker exec php-fpm ls -la /var/www/status-resolver/vendor || echo "Directory 'vendor' does not exist"
+          
+          docker exec php-fpm composer install
 
   deploy_prod_test:
     runs-on: ubuntu-latest
