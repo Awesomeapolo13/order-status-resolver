@@ -40,15 +40,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY_PROD" > private_key
           chmod 600 private_key
           echo "Clone the deploy vars repository"
-          ssh -o StrictHostKeyChecking=no -i private_key $PROD_DEPLOY_USER@$PROD_HOST
-               "ls -la && id && eval $(ssh-agent -s) && ssh-add ~/.ssh/deploy_vars_rsa && git clone git@github.com:Awesomeapolo13/deploy-vars.git ~/application/order-status-resolver/deploy/"
-          echo "Move current data to previous directory"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST
-               "mv -T $CURRENT_DEPLOY_DIR $PREVIOUS_DEPLOY_DIR"
-          echo "Clone the project repository"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST
-               "git clone $PROJECT_SRC_SSH $CURRENT_DEPLOY_DIR"
-          echo "Start a new version of the project"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST
-               "cd $CURRENT_DEPLOY_DIR && cp $DEPLOY_VARS_DIR"/order-status-resolver/.env.prod $CURRENT_DEPLOY_DIR/.env && cp $DEPLOY_VARS_DIR"/order-status-resolver/deployment/.env.prod $CURRENT_DEPLOY_DIR/.deployment/docker/.env && make dc_up_build && make com_i && make m_run"
+               "ls -la && id"
         shell: bash
