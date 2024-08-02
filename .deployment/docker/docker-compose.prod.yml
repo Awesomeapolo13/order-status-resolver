@@ -2,8 +2,9 @@ version: "3.8"
 
 networks:
   general:
-    external: true
     name: general
+    external: true
+    driver: bridge
 
 services:
   php-fpm:
