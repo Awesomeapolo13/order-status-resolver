@@ -4,7 +4,6 @@ networks:
   status-resolver-net:
     name: status-resolver-net
     driver: bridge
-    external: true
 
 services:
   php-fpm:
