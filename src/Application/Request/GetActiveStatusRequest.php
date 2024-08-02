@@ -31,3 +31,4 @@ readonly class GetActiveStatusRequest
     ) {
     }
 }
+
