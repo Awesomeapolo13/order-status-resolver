@@ -1,16 +1,16 @@
 version: "3.8"
 
 networks:
-  general:
-    name: general
-    external: true
+  status-resolver-net:
+    name: status-resolver-net
     driver: bridge
+    external: true
 
 services:
   php-fpm:
     container_name: php-fpm
     networks:
-      - general
+      - status-resolver-net
     build:
       context: ../../
       dockerfile: ./.deployment/docker/php-fpm/Dockerfile
