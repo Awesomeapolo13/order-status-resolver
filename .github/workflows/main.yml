@@ -40,6 +40,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY_PROD" > private_key
           chmod 600 private_key
           echo "Clone the deploy vars repository"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST
-               "ls -la && id"
+          ssh -o StrictHostKeyChecking=no -i private_key $PROD_DEPLOY_USER@$PROD_HOST
+               "set -x; ls -la && id"
         shell: bash
