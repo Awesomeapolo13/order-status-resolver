@@ -40,7 +40,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY_PROD" > private_key
           chmod 600 private_key
           echo "Clone the deploy vars repository"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; eval $(ssh-agent -s) && ssh-add ~/.ssh/deploy_vars_rsa && git clone $DEPLOY_DATA_SRC $DEPLOY_VARS_DIR'
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; eval $(ssh-agent -s) && ssh-add ~/.ssh/deploy_vars_rsa && git clone ${{ secrets.DEPLOY_DATA_SRC }} ${{ secrets.DEPLOY_VARS_DIR }}'
           echo "Move current data to previous directory"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST "mv -T $CURRENT_DEPLOY_DIR $PREVIOUS_DEPLOY_DIR"
           echo "Clone the project repository"
