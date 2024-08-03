@@ -424,7 +424,7 @@ class PreDeliveryStatusProvider
                 'isRated' => 0,
                 'orderDate' => $currentDate->format(DateTimeInterface::ATOM),
                 'statusCheckedOutAt' => $currentDate->format(DateTimeInterface::ATOM),
-                'ttCloseTime' => '22:00',
+                'ttCloseTime' => StoreCloseTimeProvider::endInTenPM(),
                 'courierSearchingTime' => '20',
                 'nearestSlotNum' => 23,
                 'currentSlotNum' => 20,
