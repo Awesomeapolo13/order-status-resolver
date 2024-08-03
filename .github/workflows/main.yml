@@ -39,14 +39,20 @@ jobs:
           echo "Deploying to master server..."
           echo "$SSH_PRIVATE_KEY_PROD" > private_key
           chmod 600 private_key
+          echo "Clear the deploy vars"
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'rm -rf ${{ secrets.DEPLOY_VARS_DIR }}/{*,.*}'
           echo "Clone the deploy vars repository"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; eval $(ssh-agent -s) && ssh-add ~/.ssh/deploy_vars_rsa && git clone ${{ secrets.DEPLOY_DATA_SRC }} ${{ secrets.DEPLOY_VARS_DIR }}'
+          echo "Clear the previous directory and stop the project"
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; rm -rf ${{ secrets.PREVIOUS_DEPLOY_DIR }}/{*,.*} && cd ${{ secrets.CURRENT_DEPLOY_DIR }} && make dc_down'
           echo "Move current data to previous directory"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; mv -T ${{ secrets.CURRENT_DEPLOY_DIR }} ${{ secrets.PREVIOUS_DEPLOY_DIR }}'
           echo "Clone the project repository"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; mkdir ${{ secrets.CURRENT_DEPLOY_DIR }} && eval $(ssh-agent -s) && ssh-add ~/.ssh/order_status_rsa && git clone ${{ secrets.PROJECT_SRC_SSH }} ${{ secrets.CURRENT_DEPLOY_DIR }}'
           echo "Copy enviroments"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; cd ${{ secrets.CURRENT_DEPLOY_DIR }} && cp ${{ secrets.DEPLOY_VARS_DIR }}/order-status-resolver/.env.prod ${{ secrets.CURRENT_DEPLOY_DIR }}/.env && cp ${{ secrets.DEPLOY_VARS_DIR }}/order-status-resolver/deployment/.env.prod ${{ secrets.CURRENT_DEPLOY_DIR }}/.deployment/docker/.env'
-          echo "Copy enviroments"
+          echo "Start the project"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; cd ${{ secrets.CURRENT_DEPLOY_DIR }} && docker-compose -f ./.deployment/docker/docker-compose.yml --env-file ./.deployment/docker/.env up -d --build && docker exec php-fpm composer install && docker exec php-fpm php bin/console doctrine:migration:migrate'
+          echo "Clear the deploy vars"
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'rm -rf ${{ secrets.DEPLOY_VARS_DIR }}/{*,.*}'
         shell: bash
