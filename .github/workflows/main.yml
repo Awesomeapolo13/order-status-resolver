@@ -40,7 +40,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY_PROD" > private_key
           chmod 600 private_key
           echo "Clear the deploy vars"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'rm -rf ${{ secrets.DEPLOY_VARS_DIR }}/{*,.*}'
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; rm -rf ${{ secrets.DEPLOY_VARS_DIR }}/{*,.*}'
           echo "Clone the deploy vars repository"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; eval $(ssh-agent -s) && ssh-add ~/.ssh/deploy_vars_rsa && git clone ${{ secrets.DEPLOY_DATA_SRC }} ${{ secrets.DEPLOY_VARS_DIR }}'
           echo "Clear the previous directory and stop the project"
@@ -54,5 +54,5 @@ jobs:
           echo "Start the project"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; cd ${{ secrets.CURRENT_DEPLOY_DIR }} && docker-compose -f ./.deployment/docker/docker-compose.yml --env-file ./.deployment/docker/.env up -d --build && docker exec php-fpm composer install && docker exec php-fpm php bin/console doctrine:migration:migrate'
           echo "Clear the deploy vars"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'rm -rf ${{ secrets.DEPLOY_VARS_DIR }}/{*,.*}'
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; rm -rf ${{ secrets.DEPLOY_VARS_DIR }}/{*,.*}'
         shell: bash
