@@ -44,7 +44,7 @@ jobs:
           echo "Clone the deploy vars repository"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; eval $(ssh-agent -s) && ssh-add ~/.ssh/deploy_vars_rsa && git clone ${{ secrets.DEPLOY_DATA_SRC }} ${{ secrets.DEPLOY_VARS_DIR }}'
           echo "Clear the previous directory and stop the project"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; rm -rf ${{ secrets.PREVIOUS_DEPLOY_DIR }}/{*,.*} && cd ${{ secrets.CURRENT_DEPLOY_DIR }} && make docker-compose -f ./.deployment/docker/docker-compose.prod.yml --env-file ./.deployment/docker/.env down'
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; rm -rf ${{ secrets.PREVIOUS_DEPLOY_DIR }}/{*,.*} && cd ${{ secrets.CURRENT_DEPLOY_DIR }} && docker-compose -f ./.deployment/docker/docker-compose.prod.yml --env-file ./.deployment/docker/.env down'
           echo "Move current data to previous directory"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; mv -T ${{ secrets.CURRENT_DEPLOY_DIR }} ${{ secrets.PREVIOUS_DEPLOY_DIR }}'
           echo "Clone the project repository"
