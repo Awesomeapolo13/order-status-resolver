@@ -170,7 +170,8 @@ class ExpressDeliveryStatusProvider
     public static function readyNeedPay(): array
     {
         $currentDate = new DateTime();
-        $orderDate = DateTimeProvider::threeHoursForward($currentDate);
+        $orderDate = DateTimeProvider::twoHoursForward($currentDate);
+        $deliveryDate = DateTimeProvider::threeHoursForward($currentDate);
         $statusCheckedOutAt = $currentDate;
         $lastPayTime = DateTimeProvider::threeHoursForward($currentDate);
 
@@ -191,11 +192,9 @@ class ExpressDeliveryStatusProvider
                 'courierSearchingTime' => '20',
                 'nearestSlotNum' => 23,
                 'currentSlotNum' => 20,
-                'currentSlotBegin' => (clone $orderDate)
-                    ->setTime(16, 0)
-                    ->format(DateTimeInterface::ATOM),
+                'currentSlotBegin' => (clone $deliveryDate)->format(DateTimeInterface::ATOM),
                 'currentSlotLength' => 30,
-                'deliveryDate' => $orderDate->format(DateTimeInterface::ATOM),
+                'deliveryDate' => $deliveryDate->format(DateTimeInterface::ATOM),
                 'lastPayTime' => $lastPayTime->format(DateTimeInterface::ATOM),
                 'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
             ],

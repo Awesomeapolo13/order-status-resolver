@@ -55,7 +55,7 @@ class OrderStatusDtoFactory implements OrderStatusDtoFactoryInterface
                 $request->courierSearchingTime,
             )
                 : null,
-            new DateTime($request->currentDate),
+            isset($request->currentDate) ? new DateTime($request->currentDate) : new DateTime(),
         );
     }
 }
