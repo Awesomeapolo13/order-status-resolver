@@ -48,5 +48,5 @@ jobs:
           echo "Copy enviroments"
           ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; cd ${{ secrets.CURRENT_DEPLOY_DIR }} && cp ${{ secrets.DEPLOY_VARS_DIR }}/order-status-resolver/.env.prod ${{ secrets.CURRENT_DEPLOY_DIR }}/.env && cp ${{ secrets.DEPLOY_VARS_DIR }}/order-status-resolver/deployment/.env.prod ${{ secrets.CURRENT_DEPLOY_DIR }}/.deployment/docker/.env'
           echo "Copy enviroments"
-          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; cd ${{ secrets.CURRENT_DEPLOY_DIR }} && docker-compose -f ./.deployment/docker/docker-compose.prod.yml --env-file ./.deployment/docker/.env up -d --build && docker exec php-fpm composer install && docker exec php-fpm php bin/console doctrine:migration:migrate'
+          ssh -o StrictHostKeyChecking=no -i private_key -tt $PROD_DEPLOY_USER@$PROD_HOST 'set -x; cd ${{ secrets.CURRENT_DEPLOY_DIR }} && docker-compose -f ./.deployment/docker/docker-compose.yml --env-file ./.deployment/docker/.env up -d --build && docker exec php-fpm composer install && docker exec php-fpm php bin/console doctrine:migration:migrate'
         shell: bash
