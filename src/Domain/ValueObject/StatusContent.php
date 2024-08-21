@@ -13,6 +13,7 @@ readonly class StatusContent
     private array $subTitle;
     private array $description;
     private array $icoType;
+    private array $placeholders;
 
     public function __construct(
         string $title,
@@ -25,6 +26,7 @@ readonly class StatusContent
         array $icoType = [
             self::DEFAULT_CONTENT_KEY => null,
         ],
+        array $placeholders = [],
     ) {
         $this->assertTitle($title);
         $this->assertContent($subTitle);
@@ -34,6 +36,7 @@ readonly class StatusContent
         $this->subTitle = $subTitle;
         $this->description = $description;
         $this->icoType = $icoType;
+        $this->placeholders = $placeholders;
     }
 
     public function getTitle(): string

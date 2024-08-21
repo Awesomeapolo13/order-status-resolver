@@ -8,5 +8,10 @@
         <field name="subTitle" column="sub_title" type="json" />
         <field name="description" column="description" type="json" />
         <field name="icoType" column="ico_type" type="json" />
+        <field name="placeholders" column="placeholders" type="json">
+            <options>
+                <option name="default">{}</option>
+            </options>
+        </field>
     </embeddable>
 </doctrine-mapping>
