@@ -30,6 +30,7 @@ class OrderStatusModelFactory
             $orderStatusDto->statusId === $orderStatus->getStatusId(),
             $orderStatusDto->delivery,
             $orderStatusDto->currentDateTime,
+            $content->getPlaceholders(),
         );
     }
 }

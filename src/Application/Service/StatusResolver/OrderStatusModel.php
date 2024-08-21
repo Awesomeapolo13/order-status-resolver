@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Service\StatusResolver;
 
+use App\Application\Service\StatusResolver\Factory\OrderStatusDtoFactoryInterface;
 use App\Application\Service\StatusResolver\Trait\FindActualStatusTrait;
 use App\Domain\Entity\OrderStatus;
 use App\Domain\ValueObject\Delivery;
@@ -26,21 +27,22 @@ class OrderStatusModel
     private const PICK_UP_BUILD_IS_EXPIRED_SHIFT = '+45 minutes';
 
     public function __construct(
-        private int             $statusId,
-        private string          $code,
-        private string          $title,
-        public OrderType        $orderType,
-        public OrderState       $orderState,
-        public DateTime         $orderDate,
-        public DateTime         $statusCheckedOutAt,
-        public StoreWorkingTime $workingTime,
-        public array            $statuses,
-        private ?string         $subTitle = null,
-        private string          $description = '',
-        private ?int            $iconType = null,
-        private bool            $isActive = false,
-        public ?Delivery        $delivery = null,
-        public ?DateTime        $currentDateTime = null,
+        private int              $statusId,
+        private string           $code,
+        private string           $title,
+        private OrderType        $orderType,
+        private OrderState       $orderState,
+        private DateTime         $orderDate,
+        private DateTime         $statusCheckedOutAt,
+        private StoreWorkingTime $workingTime,
+        private array            $statuses,
+        private ?string          $subTitle = null,
+        private string           $description = '',
+        private ?int             $iconType = null,
+        private bool             $isActive = false,
+        private ?Delivery        $delivery = null,
+        private ?DateTime        $currentDateTime = null,
+        private array            $placeholders = [],
     ) {
     }
 
@@ -48,6 +50,7 @@ class OrderStatusModel
     {
         $actualStatus = $this->findActualStatus($this->statusId, $this->statuses);
         $this->setDefault($actualStatus);
+        // FixMe Тут не вставляется плейсхолдер в заголовок. Потому что он не проходит через updateContent метод.
         $content = $actualStatus->getContent();
 
         $this->updateContent($content->getDescription(), 'description');
@@ -321,6 +324,7 @@ class OrderStatusModel
         $this->description = $content->getDefaultDescription();
         $this->iconType = $content->getDefaultIcoType();
         $this->code = $status->getCode()->getCode();
+        $this->placeholders = $content->getPlaceholders();
     }
 
     private function updateContent(array $content, string $contentProperty): void
@@ -335,5 +339,36 @@ class OrderStatusModel
                 break;
             }
         }
+
+        $placeholders = $this->placeholders;
+        $text = $this->{$contentProperty};
+        if (is_string($text) && isset($placeholders[$contentProperty])) {
+            foreach ($placeholders[$contentProperty] as $placeholder) {
+
+                $this->{$contentProperty} = preg_replace(
+                    '/\{(' . $placeholder . ')\}/',
+                    $this->providePlaceholderValue($placeholder),
+                    $this->{$contentProperty}
+                );
+
+            }
+        }
+    }
+
+    private function providePlaceholderValue(string $name): string
+    {
+        // ToDO: Придумать как это вынести в сервис и передать в зависимости модели.
+        $paymentDateTime = $this->delivery?->getPaymentDateTime();
+        $lastPayTime = $paymentDateTime?->getLastPayTime()
+            ? $paymentDateTime->getLastPayTime()->format('H:i')
+            : '';
+        $ttCloseWorkingTime = $this->workingTime->getTtCloseTime();
+
+        return match (true) {
+            $this->orderType->isExpressDelivery() && $name === 'lastPayTime',
+                $this->orderType->isPreDelivery() && $name === 'lastPayTime' => $lastPayTime,
+            $this->orderType->isExpressPickUp() && $name === 'ttCloseTime',
+                $this->orderType->isPrePickUp() && $name === 'ttCloseTime' => $ttCloseWorkingTime,
+        };
     }
 }
