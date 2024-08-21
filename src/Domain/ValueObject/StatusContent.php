@@ -74,6 +74,11 @@ readonly class StatusContent
         return $this->icoType[self::DEFAULT_CONTENT_KEY];
     }
 
+    public function getPlaceholders(): array
+    {
+        return $this->placeholders;
+    }
+
     private function assertTitle(string $title): void
     {
         if ($title === '') {
