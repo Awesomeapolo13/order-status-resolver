@@ -475,7 +475,7 @@ class PreDeliveryStatusProvider
                 'currentDate' => $currentDate->format(DateTimeInterface::ATOM),
             ],
             [
-                'title' => 'Заказ собран и ждет оплаты до {lastPayTime}',
+                'title' => 'Заказ собран и ждет оплаты до ' . $lastPayDt->format('H:i'),
                 'subTitle' => 'Ожидает оплаты',
                 'description' => 'Пожалуйста, оплатите заказ, чтобы мы доставили его к выбранному Вами времени. '
                     . 'Сразу после оплаты мы назначим курьера.',

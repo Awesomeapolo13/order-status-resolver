@@ -343,7 +343,7 @@ class PrePickUpStatusProvider
             [
                 'title' => 'Заказ готов к выдаче',
                 'subTitle' => null,
-                'description' => "Заказ ждет Вас в магазине! Заберите до {ttCloseTime}.",
+                'description' => 'Заказ ждет Вас в магазине! Заберите до ' . $closingTime . '.',
                 'icoType' => null,
             ],
         ];
@@ -375,7 +375,7 @@ class PrePickUpStatusProvider
             [
                 'title' => 'Заказ готов к выдаче. Успейте забрать',
                 'subTitle' => 'Успейте забрать',
-                'description' => "Заказ ждет Вас в магазине! Заберите до {ttCloseTime}.",
+                'description' => 'Заказ ждет Вас в магазине! Заберите до ' . $closingTime . '.',
                 'icoType' => 2,
             ],
         ];
@@ -440,7 +440,7 @@ class PrePickUpStatusProvider
             [
                 'title' => 'Заказ собран и оплачен. Успейте забрать',
                 'subTitle' => 'Успейте забрать',
-                'description' =>  "Заказ ждет Вас в магазине! Заберите до {ttCloseTime}.",
+                'description' =>  'Заказ ждет Вас в магазине! Заберите до ' . $closingTime . '.',
                 'icoType' => 2,
             ],
         ];

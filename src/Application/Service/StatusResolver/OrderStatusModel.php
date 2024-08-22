@@ -50,9 +50,9 @@ class OrderStatusModel
     {
         $actualStatus = $this->findActualStatus($this->statusId, $this->statuses);
         $this->setDefault($actualStatus);
-        // FixMe Тут не вставляется плейсхолдер в заголовок. Потому что он не проходит через updateContent метод.
         $content = $actualStatus->getContent();
 
+        $this->fillPlaceHolders('title');
         $this->updateContent($content->getDescription(), 'description');
         $this->updateContent($content->getSubTitle(), 'subTitle');
         $this->updateContent($content->getIcoType(), 'iconType');
@@ -340,6 +340,11 @@ class OrderStatusModel
             }
         }
 
+        $this->fillPlaceHolders($contentProperty);
+    }
+
+    private function fillPlaceHolders(string $contentProperty): void
+    {
         $placeholders = $this->placeholders;
         $text = $this->{$contentProperty};
         if (is_string($text) && isset($placeholders[$contentProperty])) {
