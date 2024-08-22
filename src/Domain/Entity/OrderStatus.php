@@ -17,6 +17,7 @@ class OrderStatus
         private OrderType $orderType,
         private StatusCode $code,
         private StatusContent $content,
+        private bool $inList,
     ) {
     }
 
@@ -69,6 +70,18 @@ class OrderStatus
     public function setContent(StatusContent $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function isInList(): bool
+    {
+        return $this->inList;
+    }
+
+    public function setInList(bool $inList): self
+    {
+        $this->inList = $inList;
 
         return $this;
     }

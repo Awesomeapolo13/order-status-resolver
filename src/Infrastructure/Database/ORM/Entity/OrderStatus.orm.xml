@@ -20,5 +20,10 @@
         <embedded name="orderType" use-column-prefix="false" class="App\Domain\ValueObject\OrderType" />
         <embedded name="code" use-column-prefix="false" class="App\Domain\ValueObject\StatusCode" />
         <embedded name="content" use-column-prefix="false" class="App\Domain\ValueObject\StatusContent" />
+        <field name="inList" column="in_list" type="boolean" >
+            <options>
+                <option name="default">false</option>
+            </options>
+        </field>
     </entity>
 </doctrine-mapping>
