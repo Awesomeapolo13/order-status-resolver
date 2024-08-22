@@ -5,6 +5,10 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        App\Application\Service\Workflow\WorkflowNameResolver\WorkflowNameResolverInterface:
+            tags: ['app.workflow_name_resolver']
+
     App\:
         resource: '../src/'
         exclude:
@@ -18,3 +22,49 @@ services:
             $env: '%kernel.environment%'
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
+
+    # WorkflowNameResolvers
+    active_name_resolver:
+        class: App\Application\Service\Workflow\WorkflowNameResolver\ActiveStatusWorkflowNameResolver
+
+    list_name_resolver:
+        class: App\Application\Service\Workflow\WorkflowNameResolver\StatusListWorkflowNameResolver
+
+    # Workflow registry configurations
+    active_status_registry:
+        class: App\Infrastructure\Service\Workflow\SymfonyStatusRegistry
+        arguments:
+            $workflowResolver: '@active_name_resolver'
+
+    list_status_registry:
+        class: App\Infrastructure\Service\Workflow\SymfonyStatusRegistry
+        arguments:
+            $workflowResolver: '@list_name_resolver'
+
+    # Status resolver configurations
+    active_status_resolver:
+        class: App\Application\Service\StatusResolver\OrderStatusResolver
+        arguments:
+            $registry: '@active_status_registry'
+
+    list_status_resolver:
+        class: App\Application\Service\StatusResolver\OrderStatusResolver
+        arguments:
+            $registry: '@list_status_registry'
+
+    full_status_resolver:
+        class: App\Application\Service\StatusResolver\AddStatusListResolver
+        arguments:
+            $activeStatusResolver: '@active_status_resolver'
+            $statusListResolver: '@list_status_resolver'
+
+    # Use cases
+    App\Application\UseCase\GetActiveStatusUseCase:
+        arguments:
+            $orderStatusResolver: '@active_status_resolver'
+
+    App\Application\UseCase\GetStatusUseCase:
+        arguments:
+            $orderStatusResolver: '@full_status_resolver'
+
+

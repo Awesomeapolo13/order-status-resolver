@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Service\StatusResolver;
 
-use App\Application\Service\StatusResolver\Factory\OrderStatusDtoFactoryInterface;
 use App\Application\Service\StatusResolver\Trait\FindActualStatusTrait;
 use App\Domain\Entity\OrderStatus;
 use App\Domain\ValueObject\Delivery;
@@ -26,6 +25,10 @@ class OrderStatusModel
     private const NEED_HURRY_TO_PAY_PICK_UP_SHIFT = '-2 hours';
     private const PICK_UP_BUILD_IS_EXPIRED_SHIFT = '+45 minutes';
 
+    /**
+     * @param OrderStatus[] $statuses
+     * @param OrderStatusModel[] $statusList
+     */
     public function __construct(
         private int              $statusId,
         private string           $code,
@@ -43,6 +46,7 @@ class OrderStatusModel
         private ?Delivery        $delivery = null,
         private ?DateTime        $currentDateTime = null,
         private array            $placeholders = [],
+        private array            $statusList = [],
     ) {
     }
 
@@ -96,6 +100,18 @@ class OrderStatusModel
     public function isActive(): bool
     {
         return $this->isActive;
+    }
+
+    public function getStatusList(): array
+    {
+        return $this->statusList;
+    }
+
+    public function setStatusList(array $statusList): self
+    {
+        $this->statusList = $statusList;
+
+        return $this;
     }
 
     public function isPreparingOnProduction(): bool

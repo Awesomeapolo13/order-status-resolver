@@ -27,6 +27,8 @@ class GetStatusUseCase
         $statuses = $this->orderStatusRepository->findStatusesByType(
             new GetStatusesByTypeQuery($request->isDelivery, $request->isExpress)
         );
+        $orderStatusDto = $this->orderStatusDtoFactory->createFromRequest($request, $statuses);
+        $statusModel = $this->orderStatusResolver->resolveStatus($orderStatusDto);
 
         return new GetStatusResponse(
             new GetActiveStatusResponse(

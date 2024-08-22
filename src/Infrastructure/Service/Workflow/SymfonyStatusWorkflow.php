@@ -11,7 +11,7 @@ use Symfony\Component\Workflow\WorkflowInterface as SymfonyWorkflowInterface;
 class SymfonyStatusWorkflow implements WorkflowInterface
 {
     public function __construct(
-        private SymfonyWorkflowInterface $workflow,
+        private readonly SymfonyWorkflowInterface $workflow,
     ) {
     }
 
